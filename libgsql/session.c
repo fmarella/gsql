@@ -569,7 +569,7 @@ gsql_session_unsaved_dialog (GSQLSession *session)
 	GSQLWorkspace *workspace;
 	GtkTreeStore *ts;
 	GtkWidget  *tv = NULL;
-	GtkContainer *content_area;
+	GtkWidget *content_area;
 	GtkWidget *dialog;
 	GtkWidget	*scroll;
 	GtkWidget *label;

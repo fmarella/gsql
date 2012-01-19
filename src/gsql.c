@@ -297,7 +297,7 @@ create_dialog_logon (void)
 	gtk_dialog_set_default_response(GTK_DIALOG(dialog_logon), GTK_RESPONSE_OK);
 	gtk_window_set_resizable (GTK_WINDOW (dialog_logon), FALSE);
         
-	dialog_vbox = gtk_dialog_get_content_area (dialog_logon);
+	dialog_vbox = gtk_dialog_get_content_area (GTK_DIALOG (dialog_logon));
 	gtk_widget_show (dialog_vbox);
         
 	hbox1 = gtk_hbox_new (FALSE, 0);
