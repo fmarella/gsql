@@ -57,7 +57,7 @@ engine_session_open (GtkWidget *logon_widget, gchar *buffer) {
 	widget = g_object_get_data (G_OBJECT (logon_widget), "password");
 	password = gtk_entry_get_text (GTK_ENTRY (widget));
 	widget = g_object_get_data (G_OBJECT (logon_widget), "database");
-	database = gtk_combo_box_get_active_text (GTK_COMBO_BOX (widget));
+	database = gtk_combo_box_text_get_active_text (GTK_COMBO_BOX_TEXT (widget));
 	widget = g_object_get_data (G_OBJECT (logon_widget), "hostname");
 	hostname = gtk_entry_get_text (GTK_ENTRY (widget));
 	widget = g_object_get_data (G_OBJECT (logon_widget), "port");

@@ -164,7 +164,7 @@ engine_logon_widget_new ()
 	gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
 	gtk_misc_set_padding (GTK_MISC (label), 14, 0);
 	
-	database_name = gtk_combo_box_entry_new_text ();
+	database_name = GTK_WIDGET (gtk_combo_box_text_new_with_entry ());
 	gtk_widget_show (database_name);
 	gtk_table_attach (GTK_TABLE (table), database_name, 1, 2, 3, 4,
 			  (GtkAttachOptions) (GTK_FILL),

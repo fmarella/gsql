@@ -260,13 +260,13 @@ engine_logon_widget_create ()
 	gtk_box_pack_start (GTK_BOX (oracle_option_hbox), label, FALSE, FALSE, 0);
 	gtk_misc_set_padding (GTK_MISC (label), 14, 0);
         
-	connect_as = gtk_combo_box_new_text ();
+	connect_as = GTK_WIDGET (gtk_combo_box_text_new_with_entry ());
 	gtk_widget_show (connect_as);
 	gtk_box_pack_start (GTK_BOX (oracle_option_hbox), connect_as, TRUE, TRUE, 0);
 	GTK_WIDGET_SET_FLAGS (connect_as, GTK_CAN_DEFAULT);
-	gtk_combo_box_append_text (GTK_COMBO_BOX (connect_as), "Normal");
-	gtk_combo_box_append_text (GTK_COMBO_BOX (connect_as), "SYSDBA");
-	gtk_combo_box_append_text (GTK_COMBO_BOX (connect_as), "SYSOPER");
+	gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (connect_as), "Normal");
+	gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (connect_as), "SYSDBA");
+	gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (connect_as), "SYSOPER");
 	gtk_combo_box_set_active (GTK_COMBO_BOX (connect_as), 0); 
         
 	label = gtk_label_new (_("Options"));
