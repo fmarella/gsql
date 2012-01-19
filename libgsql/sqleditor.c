@@ -898,7 +898,7 @@ do_sql_run (GSQLEditor *sqleditor)
 		} else {
 			
 			GSQL_THREAD_ENTER;
-			gtk_widget_hide_all (GTK_WIDGET (result_vbox));
+			gtk_widget_hide (GTK_WIDGET (result_vbox));
 			gtk_widget_set_no_show_all (GTK_WIDGET (result_vbox), TRUE);
 			
 			if (gsql_cursor_get_state (cursor) == GSQL_CURSOR_STATE_ERROR)
@@ -1296,7 +1296,7 @@ do_sql_fetch (GSQLEditor *editor)
 		{
 			GSQL_DEBUG ("Variables list is zero length");
 		
-			gtk_widget_hide_all (GTK_WIDGET (result_vbox));
+			gtk_widget_hide (GTK_WIDGET (result_vbox));
 			gtk_widget_set_no_show_all (GTK_WIDGET (result_vbox), TRUE);
 			gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (result_treeview), FALSE);
 			GSQL_THREAD_LEAVE;

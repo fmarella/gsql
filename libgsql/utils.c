@@ -309,7 +309,7 @@ gsql_utils_header_new (GtkWidget * icon, gchar *text, gchar *tooltip,
 		rcstyle = gtk_rc_style_new ();
 		rcstyle->xthickness = rcstyle->ythickness = 0;
 		gtk_widget_modify_style (button, rcstyle);
-		gtk_rc_style_unref (rcstyle);
+		g_object_unref (rcstyle);
 		
 		gtk_widget_set_size_request (button, w+2, h+2);
 		
