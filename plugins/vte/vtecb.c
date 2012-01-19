@@ -34,6 +34,10 @@
 #include <sys/types.h>
 #include <signal.h>
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 static void
 vte_exited_cb (GtkWidget *widget, gboolean force);
 static void
@@ -155,8 +159,12 @@ on_open_terminal_activate (GtkMenuItem * mi, gpointer data)
 					  G_CALLBACK (vte_exited_cb), NULL);
 
 	vte_terminal_set_scroll_on_output (term, TRUE);
-	
+
+#if GTK_API_VERSION >= 3
+	scroll = gtk_vscrollbar_new (GTK_ADJUSTMENT (gtk_scrollable_get_vadjustment(term)));
+#else
 	scroll = gtk_vscrollbar_new (GTK_ADJUSTMENT (term->adjustment));
+#endif
 	hbox = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (hbox), GTK_WIDGET (term), TRUE, TRUE, 0);
 	gtk_box_pack_start (GTK_BOX (hbox), scroll, FALSE, TRUE, 0);
