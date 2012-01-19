@@ -250,10 +250,10 @@ nav_tree_databases_event (GSQLNavigation *navigation,
 	switch (event)
 	{
 		
-		case GDK_Insert:
+		case GDK_KEY_Insert:
 			GSQL_DEBUG ("Insert pressed");
 			break;
-		case GDK_Delete:
+		case GDK_KEY_Delete:
 			GSQL_DEBUG ("Delete pressed");
 			break;
 	}

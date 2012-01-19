@@ -405,14 +405,14 @@ nav_tree_tables_event (GSQLNavigation *navigation,
   switch (event)
     {
 		
-    case GDK_Insert:
+    case GDK_KEY_Insert:
       GSQL_DEBUG ("Insert pressed");
       break;
-    case GDK_F3:
+    case GDK_KEY_F3:
       GSQL_DEBUG ("F3 pressed");
       on_popup_table_browse (NULL, NULL);
       break;
-    case GDK_Delete:
+    case GDK_KEY_Delete:
       GSQL_DEBUG ("Delete pressed");
       break;
     }

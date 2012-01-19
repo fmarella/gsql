@@ -908,7 +908,7 @@ on_navigation_key_press (GtkWidget *tv, GdkEventKey *event,
 	
 	switch (event->keyval)
 	{
-		case GDK_F5:
+		case GDK_KEY_F5:
 			GSQL_DEBUG ("F5 pressed.. refreshing");
 			// 1. get parent of selected iter and set 1-st child ID=-1
 			//    for the force refresh
@@ -927,7 +927,7 @@ on_navigation_key_press (GtkWidget *tv, GdkEventKey *event,
 			
 			return FALSE;
 			
-		case GDK_c:
+		case GDK_KEY_c:
 			if (event->state & GDK_CONTROL_MASK)
 			{
 				GSQL_DEBUG ("Ctrl+C process");
@@ -1050,7 +1050,7 @@ on_navigation_popup_refresh (GtkMenuItem *menuitem,
 	g_return_if_fail (GSQL_IS_NAVIGATION (navigation));
 	
 	// simulate F5 pressing
-	event->keyval = GDK_F5;
+	event->keyval = GDK_KEY_F5;
 	
 	on_navigation_key_press (GTK_WIDGET (navigation->private->navtree),
 							 event, navigation);

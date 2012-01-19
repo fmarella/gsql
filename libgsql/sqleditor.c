@@ -303,12 +303,12 @@ gsql_editor_new (GSQLSession *session, GtkWidget *source)
 	g_signal_connect (button, "clicked", G_CALLBACK (on_sql_run), editor);
 	
 	gtk_widget_add_accelerator (button, "clicked", accel,
-								GDK_F9, (GdkModifierType) 0,
+								GDK_KEY_F9, (GdkModifierType) 0,
 								GTK_ACCEL_VISIBLE);
 	button = gtk_ui_manager_get_widget (ui, "/SQLEditorToolbarRun/SQLEditorRunStep");
 	
 	gtk_widget_add_accelerator (button, "clicked", accel,
-								GDK_F8, (GdkModifierType) 0,
+								GDK_KEY_F8, (GdkModifierType) 0,
 								GTK_ACCEL_VISIBLE);
 	g_signal_connect (button, "clicked", G_CALLBACK (on_sql_run_step), editor);
 	
