@@ -24,7 +24,39 @@ AM_GLIB_GNU_GETTEXT
 
 AM_PROG_LIBTOOL
 
-PKG_CHECK_MODULES(PACKAGE, [gtk+-2.0 gconf-2.0 libglade-2.0 gmodule-2.0 libnotify gtksourceview-2.0])
+# GTK+ stuff (taken and adapted from brasero)
+
+AC_MSG_CHECKING([which gtk+ version to compile against])
+AC_ARG_WITH([gtk],
+  [AS_HELP_STRING([--with-gtk=2.0|3.0],[which gtk+ version to compile against (default: 2.0)])],
+  [case "$with_gtk" in
+     2.0|3.0) ;;
+     *) AC_MSG_ERROR([invalid gtk version specified]) ;;
+   esac],
+  [with_gtk=2.0])
+AC_MSG_RESULT([$with_gtk])
+
+case "$with_gtk" in
+  2.0) GTK_API_VERSION=2
+       GTK_REQUIRED=2.18.0
+       ;;
+  3.0) GTK_API_VERSION=3
+       GTK_REQUIRED=2.91.4
+       ;;
+esac
+AC_DEFINE_UNQUOTED(GTK_API_VERSION, $GTK_API_VERSION, [Define the GTK+ API version])
+
+pkg_modules="	gtk+-${GTK_API_VERSION}.0 >= $GTK_REQUIRED
+				gconf-2.0
+				gmodule-2.0
+				gtksourceview-${GTK_API_VERSION}.0
+				libnotify"
+
+PKG_CHECK_MODULES(PACKAGE, [$pkg_modules])
+
+AC_SUBST(PACKAGE_CFLAGS)
+AC_SUBST(PACKAGE_LIBS)
+
 
 PKG_CHECK_MODULES(NOTIFY, libnotify < 0.7, AC_DEFINE([NOTIFY_VERSION_NEW], [0], [Not using new libnotify]), AC_DEFINE([NOTIFY_VERSION_NEW], [1], [Using new libnotify]))
 
@@ -267,4 +299,15 @@ doc/Makefile
 doc/gsql.1
 gsql.desktop
 ])
+
+echo
+echo "$PACKAGE $VERSION"
+echo
+echo "Use GTK+ version................ : $GTK_API_VERSION.0"
+echo "Use GNOME support................: $WITH_GNOME"
+echo
+echo "Plugins:"
+echo "vte..............: $vte_enabled"
+echo "tunnel...........: $tunnel_enabled"
+echo
 
