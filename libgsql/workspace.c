@@ -48,7 +48,7 @@ struct _GSQLWorkspacePrivate
 
 static void gsql_workspace_class_init (GSQLWorkspaceClass *klass);
 static void gsql_workspace_init (GSQLWorkspace *obj);
-static void gsql_workspace_destroy (GtkObject *obj);
+static void gsql_workspace_dispose (GObject *obj);
 static void gsql_workspace_finalize (GObject *obj);
 static void gsql_workspace_size_request (GtkWidget *widget, 
 										 GtkRequisition *requisition);
@@ -714,17 +714,17 @@ gsql_workspace_set_content_page (GSQLWorkspace *workspace, GSQLContent *content)
  *	gsql_workspace_init
  *	gsql_workspace_class_init
  *	gsql_workspace_finalize
- *	gsql_workspace_destroy
+ *	gsql_workspace_dispose
  */
 
 static void
-gsql_workspace_destroy (GtkObject *obj)
+gsql_workspace_dispose (GObject *obj)
 {
 	GSQL_TRACE_FUNC;
 
 	GSQLWorkspace *workspace = GSQL_WORKSPACE (obj);
 	
-	(* GTK_OBJECT_CLASS (parent_class)->destroy) (obj);
+	(* G_OBJECT_CLASS (parent_class)->dispose) (obj);
 	
 }
 
@@ -750,14 +750,12 @@ gsql_workspace_class_init (GSQLWorkspaceClass *klass)
 	GSQL_TRACE_FUNC;
 
 	GObjectClass *obj_class = G_OBJECT_CLASS (klass);
-	GtkObjectClass   *gtkobject_class = GTK_OBJECT_CLASS (klass);
 	GtkContainerClass *container_class = GTK_CONTAINER_CLASS (klass);
 	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 	parent_class = g_type_class_peek_parent (klass);
 	
 	obj_class->finalize = gsql_workspace_finalize;
-	
-	gtkobject_class->destroy = gsql_workspace_destroy;
+	obj_class->dispose = gsql_workspace_dispose;
 	
 	widget_class->size_request = gsql_workspace_size_request;
 	widget_class->size_allocate = gsql_workspace_size_allocate;
@@ -784,7 +782,6 @@ gsql_workspace_class_init (GSQLWorkspaceClass *klass)
 					  NULL, // GSignalAccumulator
 					  NULL, g_cclosure_marshal_VOID__VOID,
 					  G_TYPE_NONE, 0);
-	gtkobject_class->destroy = gsql_workspace_destroy;
 
 }
 

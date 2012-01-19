@@ -80,7 +80,7 @@ enum {
 
 static void gsql_session_class_init (GSQLSessionClass *klass);
 static void gsql_session_init (GSQLSession *obj);
-static void gsql_session_destroy		(GtkObject	*object);
+static void gsql_session_dispose		(GObject	*object);
 static void gsql_session_set_property	(GObject		*object,
 							 guint			propid,
 							 const GValue	*value,
@@ -771,11 +771,11 @@ gsql_session_close_all ()
  *  
  */
 static void
-gsql_session_destroy (GtkObject *obj)
+gsql_session_dispose (GObject *obj)
 {
 	GSQL_TRACE_FUNC;
 
-	(* GTK_OBJECT_CLASS (parent_class)->destroy) (obj);
+	(* G_OBJECT_CLASS (parent_class)->dispose) (obj);
 	
 }
 
@@ -826,7 +826,6 @@ gsql_session_class_init (GSQLSessionClass *klass)
 	GSQL_TRACE_FUNC;
 
 	GObjectClass *obj_class = G_OBJECT_CLASS (klass);
-	GtkObjectClass   *gtkobject_class = GTK_OBJECT_CLASS (klass);
 	GtkContainerClass *container_class = GTK_CONTAINER_CLASS (klass);
 	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 	parent_class = g_type_class_peek_parent (klass);
@@ -834,8 +833,7 @@ gsql_session_class_init (GSQLSessionClass *klass)
 	obj_class->set_property = gsql_session_set_property;
 	obj_class->get_property = gsql_session_get_property;
 	obj_class->finalize = gsql_session_finalize;
-	
-	gtkobject_class->destroy = gsql_session_destroy;
+	obj_class->dispose = gsql_session_dispose;
 	
 	widget_class->size_request = gsql_session_size_request;
 	widget_class->size_allocate = gsql_session_size_allocate;

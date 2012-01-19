@@ -45,7 +45,7 @@ struct _GSQLNavigationPrivate
 
 static void gsql_navigation_class_init (GSQLNavigationClass *klass);
 static void gsql_navigation_init (GSQLNavigation *obj);
-static void gsql_navigation_destroy (GtkObject *obj);
+static void gsql_navigation_dispose (GObject *obj);
 static void gsql_navigation_finalize (GObject *obj);
 static void gsql_navigation_size_request (GtkWidget *widget, 
 										 GtkRequisition *requisition);
@@ -483,7 +483,7 @@ gsql_navigation_get_model (GSQLNavigation *navigation)
  *	gsql_navigation_init
  *	gsql_navigation_class_init
  *	gsql_navigation_finalize
- *	gsql_navigation_destroy
+ *	gsql_navigation_dispose
  
  *  details_hash_remove_key_notify
  *  details_hash_remove_value_notify
@@ -502,13 +502,13 @@ gsql_navigation_get_model (GSQLNavigation *navigation)
 
 
 static void
-gsql_navigation_destroy (GtkObject *obj)
+gsql_navigation_dispose (GObject *obj)
 {
 	GSQL_TRACE_FUNC;
 
 	GSQLNavigation *navigation = GSQL_NAVIGATION (obj);
 	
-	(* GTK_OBJECT_CLASS (parent_class)->destroy) (obj);
+	(* G_OBJECT_CLASS (parent_class)->dispose) (obj);
 	
 }
 
@@ -536,14 +536,12 @@ gsql_navigation_class_init (GSQLNavigationClass *klass)
 	GSQL_TRACE_FUNC;
 
 	GObjectClass *obj_class = G_OBJECT_CLASS (klass);
-	GtkObjectClass   *gtkobject_class = GTK_OBJECT_CLASS (klass);
 	GtkContainerClass *container_class = GTK_CONTAINER_CLASS (klass);
 	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 	parent_class = g_type_class_peek_parent (klass);
 	
 	obj_class->finalize = gsql_navigation_finalize;
-	
-	gtkobject_class->destroy = gsql_navigation_destroy;
+	obj_class->dispose = gsql_navigation_dispose;
 	
 	widget_class->size_request = gsql_navigation_size_request;
 	widget_class->size_allocate = gsql_navigation_size_allocate;
@@ -570,8 +568,6 @@ gsql_navigation_class_init (GSQLNavigationClass *klass)
 					  NULL, // GSignalAccumulator
 					  NULL, g_cclosure_marshal_VOID__VOID,
 					  G_TYPE_NONE, 0);
-	
-	gtkobject_class->destroy = gsql_navigation_destroy;
 	
 }
 

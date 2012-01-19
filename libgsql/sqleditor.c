@@ -73,7 +73,7 @@ static void on_sql_fetch (GtkToolButton *button, gpointer data);
 static void on_sql_fetch_all (GtkToolButton *button, gpointer data);
 static void on_sql_fetch_stop (GtkToolButton *button, gpointer data);
 
-static void on_editor_set_parent (GtkWidget *widget, GtkObject *object,
+static void on_editor_set_parent (GtkWidget *widget, GObject *object,
 								  gpointer user_data);
 
 static void on_buffer_changed (GtkWidget *widget, gpointer user_data);
@@ -139,7 +139,7 @@ struct _GSQLEditorPrivate
 static void gsql_editor_class_init (GSQLEditorClass *klass);
 static void gsql_editor_init (GSQLEditor *obj);
 static void gsql_editor_finalize (GObject *obj);
-static void gsql_editor_destroy (GtkObject *obj);
+static void gsql_editor_dispose (GObject *obj);
 
 
 
@@ -478,7 +478,7 @@ gsql_editor_get_result_treeview (GSQLEditor *editor)
  *  gsql_editor_class_init
  *  gsql_editor_init
  *  gsql_editor_finalize
- *  gsql_editor_destroy
+ *  gsql_editor_dispose
  *  change_handler
  *  on_run_sql
  *  on_sql_run_step
@@ -501,12 +501,11 @@ gsql_editor_class_init (GSQLEditorClass *klass)
 	GSQL_TRACE_FUNC;
 
 	GObjectClass *obj_class = G_OBJECT_CLASS (klass);
-	GtkObjectClass   *gtkobject_class = GTK_OBJECT_CLASS (klass);
 
 	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 	parent_class = g_type_class_peek_parent (klass);
-	gtkobject_class->destroy = gsql_editor_destroy;
-	
+
+	obj_class->dispose = gsql_editor_dispose;
 	obj_class->finalize = gsql_editor_finalize;
 	obj_class->set_property = gsql_editor_set_property;
 	obj_class->get_property = gsql_editor_get_property;
@@ -599,7 +598,7 @@ here===>	trace: [0x8056408] gsql_content_destroy [content.c:451]
  */
 
 static void
-gsql_editor_destroy (GtkObject *obj)
+gsql_editor_dispose (GObject *obj)
 {
 	GSQL_TRACE_FUNC;
 
@@ -613,7 +612,7 @@ gsql_editor_destroy (GtkObject *obj)
 		editor->cursor = NULL;
 	}
 	
-	(* GTK_OBJECT_CLASS (parent_class)->destroy) (obj);
+	(* G_OBJECT_CLASS (parent_class)->dispose) (obj);
 	
 }
 
@@ -2039,7 +2038,7 @@ on_editor_cb_revert (GSQLContent *content)
 }
 
 static void 
-on_editor_set_parent (GtkWidget *widget, GtkObject *object,
+on_editor_set_parent (GtkWidget *widget, GObject *object,
 								  gpointer user_data)
 {
 	GSQL_TRACE_FUNC;

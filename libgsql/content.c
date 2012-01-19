@@ -46,7 +46,7 @@ struct _GSQLContentPrivate
 static void gsql_content_class_init (GSQLContentClass *klass);
 static void gsql_content_init (GSQLContent *obj);
 static void gsql_content_finalize (GObject *obj);
-static void gsql_content_destroy (GtkObject *obj);
+static void gsql_content_dispose (GObject *obj);
 static void on_content_close_button_activate (GtkButton *button,
 											gpointer user_data);
 static void gsql_content_forall (GtkContainer *container,
@@ -348,12 +348,11 @@ gsql_content_class_init (GSQLContentClass *klass)
 	GSQL_TRACE_FUNC;
 
 	GObjectClass *obj_class = G_OBJECT_CLASS (klass);
-	GtkObjectClass   *gtkobject_class = GTK_OBJECT_CLASS (klass);
 	GtkContainerClass *container_class = GTK_CONTAINER_CLASS (klass);
 	
 	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 	parent_class = g_type_class_peek_parent (klass);
-	gtkobject_class->destroy = gsql_content_destroy;
+	obj_class->dispose = gsql_content_dispose;
 	obj_class->finalize = gsql_content_finalize;
 	
 	container_class->add = gsql_content_add;
@@ -450,13 +449,13 @@ gsql_content_finalize (GObject *obj)
 }
 
 static void
-gsql_content_destroy (GtkObject *obj)
+gsql_content_dispose (GObject *obj)
 {
 	GSQL_TRACE_FUNC;
 
 	GSQLContent *content = GSQL_CONTENT (obj);
 	
-	(* GTK_OBJECT_CLASS (parent_class)->destroy) (obj);
+	(* G_OBJECT_CLASS (parent_class)->dispose) (obj);
 	
 }
 
