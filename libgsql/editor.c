@@ -30,6 +30,10 @@
 #include <glib.h>
 #include <gdk/gdkkeysyms.h>
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 
 static GtkActionGroup *editor_actions = NULL;
 
@@ -412,9 +416,11 @@ on_editor_undo_activate (GtkMenuItem *mi, gpointer data)
 	GtkWidget *widget;
 	
 	widget = gtk_window_get_focus (GTK_WINDOW (gsql_window));
-	
-	if (!GTK_IS_SOURCE_VIEW (widget))
-		return;
+#if GTK_API_VERSION >= 3
+	g_return_if_fail (GTK_SOURCE_IS_VIEW (widget));
+#else
+	g_return_if_fail (GTK_IS_SOURCE_VIEW (widget));
+#endif
 	
 	g_signal_emit_by_name (widget, "undo");
 }
@@ -427,8 +433,11 @@ on_editor_redo_activate (GtkMenuItem *mi, gpointer data)
 	
 	widget = gtk_window_get_focus (GTK_WINDOW (gsql_window));
 	
-	if (!GTK_IS_SOURCE_VIEW (widget))
-		return;
+#if GTK_API_VERSION >= 3
+	g_return_if_fail (GTK_SOURCE_IS_VIEW (widget));
+#else
+	g_return_if_fail (GTK_IS_SOURCE_VIEW (widget));
+#endif
 	
 	g_signal_emit_by_name (widget, "redo");
 }
@@ -441,8 +450,7 @@ on_editor_copy_activate (GtkMenuItem *mi, gpointer data)
 	
 	widget = gtk_window_get_focus (GTK_WINDOW (gsql_window));
 	
-	if (!GTK_IS_TEXT_VIEW (widget))
-		return;
+	g_return_if_fail (GTK_IS_TEXT_VIEW (widget));
 	
 	g_signal_emit_by_name (widget, "copy-clipboard");
 	
@@ -456,8 +464,7 @@ on_editor_cut_activate (GtkMenuItem *mi, gpointer data)
 	
 	widget = gtk_window_get_focus (GTK_WINDOW (gsql_window));
 	
-	if (!GTK_IS_TEXT_VIEW (widget))
-		return;
+	g_return_if_fail (GTK_IS_TEXT_VIEW (widget));
 	
 	g_signal_emit_by_name (widget, "cut-clipboard");
 
@@ -471,8 +478,7 @@ on_editor_paste_activate (GtkMenuItem *mi, gpointer data)
 	
 	widget = gtk_window_get_focus (GTK_WINDOW (gsql_window));
 	
-	if (!GTK_IS_TEXT_VIEW (widget))
-		return;
+	g_return_if_fail (GTK_IS_TEXT_VIEW (widget));
 	
 	g_signal_emit_by_name (widget, "paste-clipboard");
 }
@@ -485,8 +491,7 @@ on_editor_delete_activate (GtkMenuItem *mi, gpointer data)
 	
 	widget = gtk_window_get_focus (GTK_WINDOW (gsql_window));
 	
-	if (!GTK_IS_TEXT_VIEW (widget))
-		return;
+	g_return_if_fail (GTK_IS_TEXT_VIEW (widget));
 	
 	g_signal_emit_by_name (widget, "backspace");
 }
