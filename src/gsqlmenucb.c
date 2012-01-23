@@ -43,7 +43,7 @@
 #define _GNU_SOURCE
 #include <stdio.h>
 
-#define GSQL_GLADE_DIALOGS PACKAGE_GLADE_DIR"/gsql_dialogs.glade"
+#define GSQL_DIALOGS_UI PACKAGE_UI_DIR"/gsql_dialogs.ui"
 
 void
 on_file_new_sql_activate (GtkMenuItem *mi, gpointer data)

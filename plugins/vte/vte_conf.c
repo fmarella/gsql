@@ -21,13 +21,12 @@
 
 
 #include <config.h>
-#include <glade/glade.h>
 #include <libgsql/engines.h>
 #include <libgsql/conf.h>
 #include <libgsql/common.h>
 #include <vte_conf.h>
 
-#define GSQLP_VTE_GLADE_DIALOG PACKAGE_GLADE_DIR"/plugins/vte_dialog_conf.glade"
+#define GSQLP_VTE_UI_DIALOG PACKAGE_UI_DIR"/plugins/vte_dialog_conf.ui"
 
 static void
 conf_engines_list_create (gpointer key, 
@@ -45,18 +44,25 @@ plugin_vte_conf_dialog ()
 {
 	GSQL_TRACE_FUNC;
 
-	GladeXML* gxml;
+	GtkBuilder* builder;
+	GError *error = NULL;
 	GtkDialog *dialog;
 	GtkWidget *engines_tree_view;
 	GtkListStore *engines_list;
 	GtkTreeViewColumn *column;
 	GtkCellRenderer *renderer;
 	
-	gxml = glade_xml_new (GSQLP_VTE_GLADE_DIALOG, "dialog_conf", NULL);
-	g_return_if_fail(gxml);
+	builder = gtk_builder_new ();
+	if (!gtk_builder_add_from_file (builder, GSQLP_VTE_UI_DIALOG, &error))
+	{
+		g_warning ("Couldn't load ui file: %s", error->message);
+		g_error_free (error);
+	}
+
+	g_return_if_fail(builder);
 	
-	dialog = (GtkDialog *) glade_xml_get_widget (gxml, "dialog_conf");
-	engines_tree_view = glade_xml_get_widget (gxml, "treeview_engines_setting");
+	dialog = (GtkDialog *) gtk_builder_get_object (builder, "dialog_conf");
+	engines_tree_view = gtk_builder_get_object (builder, "treeview_engines_setting");
 	
 	engines_list = gtk_list_store_new (4,
 									   G_TYPE_STRING, // engine id
@@ -91,8 +97,6 @@ plugin_vte_conf_dialog ()
 	gtk_tree_view_set_model (GTK_TREE_VIEW (engines_tree_view),
 							 GTK_TREE_MODEL (engines_list));
 	
-	glade_xml_signal_autoconnect(gxml);
-	
 	gsql_engines_foreach (conf_engines_list_create,
 							engines_list);
 	
@@ -100,7 +104,7 @@ plugin_vte_conf_dialog ()
 	
 	gtk_dialog_run (dialog);
 	gtk_widget_destroy ((GtkWidget *) dialog);
-	g_object_unref(G_OBJECT(gxml));
+	g_object_unref(G_OBJECT(builder));
 	
 	return;
 };

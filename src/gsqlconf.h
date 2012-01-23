@@ -23,7 +23,6 @@
 #ifndef _GSQLCONF_H
 #define _GSQLCONF_H
 
-#include <glade/glade.h>
 #include <libgsql/common.h>
 #include <libgsql/conf.h>
 

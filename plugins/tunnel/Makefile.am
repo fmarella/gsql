@@ -4,12 +4,10 @@ INCLUDES = \
 
 libgsqldir = $(PACKAGE_PLUGINS_DIR)
 
-tunnel_gladedir = $(PACKAGE_GLADE_DIR)/plugins
 tunnel_uidir = $(PACKAGE_UI_DIR)/plugins
 tunnel_pixmapsdir = $(prefix)/@NO_PREFIX_PACKAGE_PIXMAPS_DIR@/plugins
 
-tunnel_ui_DATA = 
-tunnel_glade_DATA = tunnel_config.xml
+tunnel_ui_DATA = tunnel_config.ui
 
 tunnel_pixmaps_DATA = \
 	tunnel.png
@@ -34,7 +32,6 @@ libgsqlplugin_tunnel_la_LIBADD = \
 
 EXTRA_DIST = \
 	$(tunnel_ui_DATA) \
-	$(tunnel_glade_DATA) \
 	$(tunnel_pixmaps_DATA)
 
 ## File created by the gnome-build tools

@@ -15,15 +15,13 @@ AM_CFLAGS =\
 	 -O1\
 	 -g
 
-gsql_gladedir = $(PACKAGE_GLADE_DIR)
 gsql_uidir = $(PACKAGE_UI_DIR)
 
-gsql_glade_DATA = \
-	gsql_dialogs.glade
 gsql_ui_DATA = gsql.ui \
 	gsqlfiles.ui\
 	gsqlhelp.ui\
-	gsqltool.ui
+	gsqltool.ui \
+	gsql_dialogs.ui
 
 bin_PROGRAMS = gsql
 
@@ -55,7 +53,6 @@ gsql_LDADD = \
 
 
 EXTRA_DIST = \
-	$(gsql_glade_DATA) \
 	$(gsql_ui_DATA)
 
 AM_CPPFLAGS = \

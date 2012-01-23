@@ -29,7 +29,7 @@
 #define GSQLP_RUNNER_STOCK_ICON "gsql-plugin-runner-icon"
 #define GSQLP_RUNNER_STOCK_LOGO "gsql-plugin-runner-logo"
 
-#define GSQLP_RUNNER_GLADE_DIALOG PACKAGE_GLADE_DIR"/plugins/runner_dialog.glade"
+#define GSQLP_RUNNER_UI_DIALOG PACKAGE_UI_DIR"/plugins/runner_dialog.ui"
 
 typedef struct _GSQLPRunnerExecOptions GSQLPRunnerExecOptions;
 

@@ -189,7 +189,6 @@ packagehelpdir=share/gnome/help/${PACKAGE}
 packagemenudir=share/gnome/apps
 packagepluginsdir='$(libdir)/gsql/plugins'
 packageenginesdir='$(libdir)/gsql/engines'
-packagegladedir=share/${PACKAGE}/glade
 packageuidir=share/${PACKAGE}/ui
 packagetemplatedir=share/${PACKAGE}/template
 
@@ -205,20 +204,15 @@ PACKAGE_ENGINES_DIR="${packageenginesdir}"
 AC_SUBST(PACKAGE_ENGINES_DIR)
 dnl AC_DEFINE_UNQUOTED(PACKAGE_ENGINES_DIR, "${packageprefix}/${packageenginesdir}", [Engines dir])
 
-dnl Subst PACKAGE_GLADE_DIR.
-PACKAGE_GLADE_DIR="${packageprefix}/${packagegladedir}"
-AC_SUBST(PACKAGE_GLADE_DIR)
-AC_DEFINE_UNQUOTED(PACKAGE_GLADE_DIR, "${packageprefix}/${packagegladedir}", [Glade dir])
-
 dnl Subst PACKAGE_UI_DIR.
 PACKAGE_UI_DIR="${packageprefix}/${packageuidir}"
 AC_SUBST(PACKAGE_UI_DIR)
-AC_DEFINE_UNQUOTED(PACKAGE_UI_DIR, "${packageprefix}/${packageuidir}", [Glade dir])
+AC_DEFINE_UNQUOTED(PACKAGE_UI_DIR, "${packageprefix}/${packageuidir}", [UI dir])
 
 dnl Subst PACKAGE_TEMPLATE_DIR.
 PACKAGE_TEMPLATE_DIR="${packageprefix}/${packagetemplatedir}"
 AC_SUBST(PACKAGE_TEMPLATE_DIR)
-AC_DEFINE_UNQUOTED(PACKAGE_TEMPLATE_DIR, "${packageprefix}/${packagetemplatedir}", [Glade dir])
+AC_DEFINE_UNQUOTED(PACKAGE_TEMPLATE_DIR, "${packageprefix}/${packagetemplatedir}", [Template dir])
 
 
 

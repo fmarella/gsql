@@ -24,7 +24,6 @@
 #include <libgsql/stock.h>
 #include <libgsql/sqleditor.h>
 #include <gtk/gtk.h>
-#include <glade/glade.h>
 #include <libgsql/common.h>
 #include "plugin_runner.h"
 #include "thread_run.h"
@@ -156,7 +155,8 @@ on_runner (GtkToggleAction *action,  gpointer user_data)
 {
 	GSQL_TRACE_FUNC;
 	
-	GladeXML* gxml;
+	GtkBuilder* builder;
+	GError *error = NULL;
 	GtkDialog *dialog;
 	gint ret, i;
 	guint p, p_hour, p_min, p_sec;
@@ -218,14 +218,20 @@ on_runner (GtkToggleAction *action,  gpointer user_data)
 		return;
 	}
 		
+	builder = gtk_builder_new ();
+
+	if (!gtk_builder_add_from_file (builder, GSQLP_RUNNER_UI_DIALOG, &error))
+	{
+		g_warning ("Couldn't load ui file: %s", error->message);
+		g_error_free (error);
+	}
+
+	g_return_if_fail(builder);
 	
-		
-	gxml = glade_xml_new (GSQLP_RUNNER_GLADE_DIALOG, "periodical_dialog", NULL);
+	dialog = (GtkDialog *) gtk_builder_get_object (builder, "periodical_dialog");
 	
-	dialog = (GtkDialog *) glade_xml_get_widget (gxml, "periodical_dialog");
-	
-	period_predef = glade_xml_get_widget (gxml, "period_predef");
-	period_predef_value = glade_xml_get_widget (gxml, "period_predef_value");
+	period_predef = GTK_WIDGET (gtk_builder_get_object (builder, "period_predef"));
+	period_predef_value = GTK_WIDGET (gtk_builder_get_object (builder, "period_predef_value"));
 	g_signal_connect (G_OBJECT (period_predef), "toggled", 
 					  G_CALLBACK (on_widget_toggled), 
 					  period_predef_value);
@@ -234,17 +240,17 @@ on_runner (GtkToggleAction *action,  gpointer user_data)
 								  !eopt->custom);
 
 	GSQL_DEBUG ("a1");
-	period_custom = glade_xml_get_widget (gxml, "period_custom");
-	custom_hbox = glade_xml_get_widget (gxml, "custom_hbox");
+	period_custom = GTK_WIDGET (gtk_builder_get_object (builder, "period_custom"));
+	custom_hbox = GTK_WIDGET (gtk_builder_get_object (builder, "custom_hbox"));
 	g_signal_connect (G_OBJECT (period_custom), "toggled", 
 					  G_CALLBACK (on_widget_toggled), custom_hbox);
 	GSQL_DEBUG ("a2");
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (period_custom),
 								  eopt->custom);
 	
-	custom_hour = glade_xml_get_widget (gxml, "custom_hour");
-	custom_min = glade_xml_get_widget (gxml, "custom_min");
-	custom_sec = glade_xml_get_widget (gxml, "custom_sec");
+	custom_hour = GTK_WIDGET (gtk_builder_get_object (builder, "custom_hour"));
+	custom_min = GTK_WIDGET (gtk_builder_get_object (builder, "custom_min"));
+	custom_sec = GTK_WIDGET (gtk_builder_get_object (builder, "custom_sec"));
 	
 	if (!eopt->custom)
 	{
@@ -294,15 +300,15 @@ on_runner (GtkToggleAction *action,  gpointer user_data)
 		gtk_spin_button_set_value (GTK_SPIN_BUTTON (custom_sec), p_sec);
 	}
 
-	suspend_start = glade_xml_get_widget (gxml, "suspend_start");
-	w2 = glade_xml_get_widget (gxml, "suspend_hbox");
+	suspend_start = GTK_WIDGET (gtk_builder_get_object (builder, "suspend_start"));
+	w2 = GTK_WIDGET (gtk_builder_get_object (builder, "suspend_hbox"));
 	g_signal_connect (G_OBJECT (suspend_start), "toggled", 
 					  G_CALLBACK (on_widget_toggled), w2);
 
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (suspend_start),
 								  eopt->suspended);
-	suspend_hour = glade_xml_get_widget (gxml, "suspend_hour");
-	suspend_min = glade_xml_get_widget (gxml, "suspend_min");
+	suspend_hour = GTK_WIDGET (gtk_builder_get_object (builder, "suspend_hour"));
+	suspend_min = GTK_WIDGET (gtk_builder_get_object (builder, "suspend_min"));
 	
 	p_hour =  eopt->suspended_period / (60*60);
 	p_min = (eopt->suspended_period - p_hour*60*60)/60;
@@ -310,8 +316,8 @@ on_runner (GtkToggleAction *action,  gpointer user_data)
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (suspend_hour), p_hour);
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (suspend_min), p_min);
 	
-	cycles_chbox = glade_xml_get_widget (gxml, "cycles_chbox");
-	cycles_limit = glade_xml_get_widget (gxml, "cycles_limit");
+	cycles_chbox = GTK_WIDGET (gtk_builder_get_object (builder, "cycles_chbox"));
+	cycles_limit = GTK_WIDGET (gtk_builder_get_object (builder, "cycles_limit"));
 	g_signal_connect (G_OBJECT (cycles_chbox), "toggled", 
 					  G_CALLBACK (on_widget_toggled), cycles_limit);
 
@@ -410,6 +416,6 @@ on_runner (GtkToggleAction *action,  gpointer user_data)
 	}
 	
 	gtk_widget_destroy ((GtkWidget *) dialog);
-	g_object_unref(G_OBJECT(gxml));
+	g_object_unref(G_OBJECT(builder));
 	
 }

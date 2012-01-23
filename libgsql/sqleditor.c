@@ -23,7 +23,6 @@
 
 #include <gtksourceview/gtksourceview.h>
 #include <gdk/gdkkeysyms.h>
-#include <glade/glade-xml.h>
 #include "sqleditor.h"
 #include "editor.h"
 #include "common.h"
@@ -1830,7 +1829,8 @@ on_editor_cb_close (GSQLContent *content, gboolean force)
 	GList	   *l_childs;
 	gboolean	changed = FALSE;
 	GtkWidget  *dialog = NULL;
-	GladeXML* gxml;
+	GtkBuilder* builder;
+	GError* error = NULL;
 	
 	gint ret;
 	
@@ -1849,11 +1849,16 @@ on_editor_cb_close (GSQLContent *content, gboolean force)
 		return;
 	}
 	
-	gxml = glade_xml_new (GSQL_GLADE_DIALOGS, "gsql_unsaved_file_dialog", NULL);
+	builder = gtk_builder_new ();
+	if (!gtk_builder_add_from_file (builder, GSQL_DIALOGS_UI, &error))
+	{
+		g_warning ("Couldn't load ui file: %s", error->message);
+		g_error_free (error);
+	}
 		
-	g_return_if_fail (gxml);
+	g_return_if_fail (builder);
 		
-	dialog = glade_xml_get_widget (gxml, "gsql_unsaved_file_dialog");
+	dialog = GTK_WIDGET (gtk_builder_get_object (builder, "gsql_unsaved_file_dialog"));
 	
 	gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (gsql_window));
 	
@@ -1861,7 +1866,7 @@ on_editor_cb_close (GSQLContent *content, gboolean force)
 	
 	gtk_widget_destroy ((GtkWidget *) dialog);
 	
-	g_object_unref(G_OBJECT(gxml));
+	g_object_unref(G_OBJECT(builder));
 		
 	switch (ret)
 	{
@@ -1898,7 +1903,7 @@ on_editor_cb_revert (GSQLContent *content)
 	gchar msg[GSQL_MESSAGE_LEN];
 	GtkTextBuffer *tbuffer;
 	gboolean reading = TRUE;
-	GladeXML* gxml;
+	GtkBuilder* builder;
 	GtkWidget  *dialog = NULL;
 	gchar *file;
 	gint ret;
@@ -1914,18 +1919,24 @@ on_editor_cb_revert (GSQLContent *content)
 	
 	if (!editor->private->is_file)
 	{
-		gxml = glade_xml_new (GSQL_GLADE_DIALOGS, "gsql_isnotafile_clear_dialog", NULL);
+		builder = gtk_builder_new ();
+
+		if (!gtk_builder_add_from_file (builder, GSQL_DIALOGS_UI, &err))
+		{
+			g_warning ("Couldn't load ui file: %s", err->message);
+			g_error_free (err);
+		}
 		
-		g_return_if_fail (gxml);
+		g_return_if_fail (builder);
 		
-		dialog = glade_xml_get_widget (gxml, "gsql_isnotafile_clear_dialog");	
+		dialog = GTK_WIDGET (gtk_builder_get_object (builder, "gsql_isnotafile_clear_dialog"));
 		gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (gsql_window));
 		
 		ret = gtk_dialog_run (GTK_DIALOG (dialog));
 	
 		gtk_widget_destroy ((GtkWidget *) dialog);
 	
-		g_object_unref(G_OBJECT(gxml));
+		g_object_unref(G_OBJECT(builder));
 		
 		switch (ret)
 		{

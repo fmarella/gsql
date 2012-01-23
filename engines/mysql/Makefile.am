@@ -1,10 +1,8 @@
 
 SUBDIRS = pixmaps
 
-engine_gladedir = $(PACKAGE_GLADE_DIR)/mysql
 engine_uidir = $(PACKAGE_UI_DIR)/mysql
 
-engine_glade_DATA = 
 engine_ui_DATA = engine_mysql.ui
 
 schemadir   = @GCONF_SCHEMA_FILE_DIR@
@@ -75,7 +73,6 @@ INCLUDES = \
 	$(PACKAGE_CFLAGS)
 
 EXTRA_DIST = \
-	$(engine_glade_DATA) \
 	$(engine_ui_DATA) \
 	$(schema_DATA)
 

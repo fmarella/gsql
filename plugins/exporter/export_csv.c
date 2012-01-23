@@ -23,7 +23,6 @@
  
 #include <glib.h>
 #include <gtk/gtk.h>
-#include <glade/glade.h>
 #include <libgsql/common.h>
 #include <libgsql/content.h>
 #include <libgsql/sqleditor.h>

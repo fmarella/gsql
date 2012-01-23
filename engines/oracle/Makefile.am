@@ -1,10 +1,8 @@
 
 SUBDIRS = pixmaps
 
-engine_gladedir = $(PACKAGE_GLADE_DIR)/oracle
 engine_uidir = $(PACKAGE_UI_DIR)/oracle
 
-engine_glade_DATA = 
 engine_ui_DATA = \
 	engine_oracle.ui
 
@@ -119,7 +117,6 @@ INCLUDES = \
 	$(ORACLE_CFLAGS) 
 
 EXTRA_DIST = \
-	$(engine_glade_DATA) \
 	$(engine_ui_DATA) \
 	$(schema_DATA)
 

@@ -1,10 +1,8 @@
 AM_CFLAGS = -Werror
 SUBDIRS = pixmaps
 
-engine_gladedir = $(PACKAGE_GLADE_DIR)/postgresql
 engine_uidir = $(PACKAGE_UI_DIR)/postgresql
 
-engine_glade_DATA = 
 engine_ui_DATA = engine_pgsql.ui
 
 schemadir   = @GCONF_SCHEMA_FILE_DIR@
@@ -84,10 +82,9 @@ INCLUDES = \
 	$(PACKAGE_CFLAGS)
 
 EXTRA_DIST = \
-        $(engine_glade_DATA) \
         $(engine_ui_DATA) \
         $(schema_DATA)
-                        
+
 #install-data-local:
 #	GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(top_srcdir)/engines/postgresql/$(schema_DATA)
 

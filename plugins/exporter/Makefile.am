@@ -4,13 +4,11 @@ INCLUDES = \
 
 libgsqldir = $(PACKAGE_PLUGINS_DIR)
 
-exporter_gladedir = $(PACKAGE_GLADE_DIR)/plugins
 exporter_uidir = $(PACKAGE_UI_DIR)/plugins
 exporter_pixmapsdir = $(prefix)/@NO_PREFIX_PACKAGE_PIXMAPS_DIR@/plugins
 
-exporter_ui_DATA = 
-exporter_glade_DATA = \
-	exporter_dialog.glade
+exporter_ui_DATA = \
+	exporter_dialog.ui
 
 exporter_pixmaps_DATA = \
 	exporter.png   \
@@ -39,7 +37,6 @@ libgsqlplugin_exporter_la_LIBADD = \
 
 EXTRA_DIST = \
 	$(exporter_ui_DATA) \
-	$(exporter_glade_DATA) \
 	$(exporter_pixmaps_DATA)
 
 AM_CPPFLAGS = \

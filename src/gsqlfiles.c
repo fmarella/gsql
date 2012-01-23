@@ -35,7 +35,7 @@
 
 #include "gsqlmenucb.h"
 
-#define GSQL_GLADE_DIALOGS PACKAGE_GLADE_DIR"/gsql_dialogs.glade"
+#define GSQL_DIALOGS_UI PACKAGE_UI_DIR"/gsql_dialogs.ui"
 
 static GtkActionEntry gsqlfiles_action[] = 
 {

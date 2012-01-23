@@ -4,13 +4,11 @@ INCLUDES = \
 
 libgsqldir = $(PACKAGE_PLUGINS_DIR)
 
-runner_gladedir = $(PACKAGE_GLADE_DIR)/plugins
 runner_uidir = $(PACKAGE_UI_DIR)/plugins
 runner_pixmapsdir = $(prefix)/@NO_PREFIX_PACKAGE_PIXMAPS_DIR@/plugins
 
-runner_ui_DATA = 
-runner_glade_DATA = \
-	runner_dialog.glade
+runner_ui_DATA = \
+	runner_dialog.ui
 
 runner_pixmaps_DATA = \
 	runner.png   \
@@ -35,7 +33,6 @@ libgsqlplugin_runner_la_LIBADD = \
 
 EXTRA_DIST = \
 	$(runner_ui_DATA) \
-	$(runner_glade_DATA) \
 	$(runner_pixmaps_DATA)
 
 AM_CPPFLAGS = \

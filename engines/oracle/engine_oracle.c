@@ -35,7 +35,7 @@
 #define ENGINE_AUTHOR "Taras Halturin"
 #define ENGINE_HOMEPAGE "http://gsql.org"
 
-#define LOGON_GLADE PACKAGE_GLADE_DIR"/oracle/oracle_logon_widget.glade"
+#define LOGON_UI PACKAGE_UI_DIR"/oracle/oracle_logon_widget.ui"
 
 #include <config.h>
 #include <libgsql/engines.h>

@@ -2,13 +2,7 @@
 SUBDIRS = \
 	pixmaps
 
-engine_glade_DATA = 
-
-engine_gladedir = \
-	$(PACKAGE_GLADE_DIR)/firebird
-
 EXTRA_DIST = \
-	$(engine_glade_DATA)\
 	$(engine_ui_DATA) \
 	$(schema_DATA)
 

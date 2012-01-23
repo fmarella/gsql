@@ -4,12 +4,12 @@ INCLUDES = \
 
 libgsqldir = $(PACKAGE_PLUGINS_DIR)
 
-vte_gladedir = $(PACKAGE_GLADE_DIR)/plugins
 vte_uidir = $(PACKAGE_UI_DIR)/plugins
 vte_pixmapsdir = $(prefix)/@NO_PREFIX_PACKAGE_PIXMAPS_DIR@/plugins
 
-vte_ui_DATA = vte.ui
-vte_glade_DATA = vte_dialog_conf.glade
+vte_ui_DATA = \
+	vte.ui \
+	vte_dialog_conf.ui
 
 vte_pixmaps_DATA = \
 	vte-terminal.png
@@ -37,7 +37,6 @@ libgsqlplugin_vte_la_LIBADD = \
 
 EXTRA_DIST = \
 	$(vte_ui_DATA) \
-	$(vte_glade_DATA) \
 	$(vte_pixmaps_DATA)
 
 

@@ -25,7 +25,6 @@
 #include <libgsql/common.h>
 #include <libgsql/utils.h>
 #include <libgsql/content.h>
-#include <glade/glade.h>
 #include "plugin_exporter.h"
 
 struct _export_types
@@ -153,7 +152,8 @@ on_open_export_dialog_activate (GtkButton *button, gpointer user_data)
 {
 	GSQL_TRACE_FUNC;
 	
-	GladeXML* gxml;
+	GtkBuilder* builder;
+	GError *error = NULL;
 	GtkDialog *dialog;
 	GtkWidget *combo;
 	GtkWidget *combo_exptype;
@@ -177,27 +177,34 @@ on_open_export_dialog_activate (GtkButton *button, gpointer user_data)
 	GtkTreeModel *model;
 	gint ret;
 	
-	gxml = glade_xml_new (GSQLP_EXPORTER_GLADE_DIALOG, "export_dialog", NULL);
-	g_return_if_fail(gxml);
+	builder = gtk_builder_new ();
+
+	if (!gtk_builder_add_from_file (builder, GSQLP_EXPORTER_UI_DIALOG, &error))
+	{
+		g_warning ("Couldn't load ui file: %s", error->message);
+		g_error_free (error);
+	}
+
+	g_return_if_fail(builder);
 	
-	dialog = (GtkDialog *) glade_xml_get_widget (gxml, "export_dialog");
+	dialog = (GtkDialog *) gtk_builder_get_object (builder, "export_dialog");
 	
 	gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (gsql_window));
 	
-	alig = (GtkAlignment *) glade_xml_get_widget (gxml, "alignment_enc");
-	alig_exptype = (GtkAlignment *) glade_xml_get_widget (gxml, "alignment_exptype");
+	alig = (GtkAlignment *) gtk_builder_get_object (builder, "alignment_enc");
+	alig_exptype = (GtkAlignment *) gtk_builder_get_object (builder, "alignment_exptype");
 	
 	combo = (GtkWidget *) gsql_enconding_list ();
 	combo_exptype = (GtkWidget *) get_export_types_combo ();
 	
-	target = (GtkWidget *) glade_xml_get_widget (gxml, "target");
+	target = (GtkWidget *) gtk_builder_get_object (builder, "target");
 	
-	choosebutton = (GtkWidget *) glade_xml_get_widget (gxml, "choosebutton");
+	choosebutton = (GtkWidget *) gtk_builder_get_object (builder, "choosebutton");
 	
-	headers = (GtkWidget *) glade_xml_get_widget (gxml, "headers");
-	progressbar = (GtkWidget *) glade_xml_get_widget (gxml, "progressbar");
-	config_vbox = (GtkWidget *) glade_xml_get_widget (gxml, "config_vbox");
-	save_button = (GtkWidget *) glade_xml_get_widget (gxml, "save_button");
+	headers = (GtkWidget *) gtk_builder_get_object (builder, "headers");
+	progressbar = (GtkWidget *) gtk_builder_get_object (builder, "progressbar");
+	config_vbox = (GtkWidget *) gtk_builder_get_object (builder, "config_vbox");
+	save_button = (GtkWidget *) gtk_builder_get_object (builder, "save_button");
 	
 	g_signal_connect ((gpointer) choosebutton, "clicked",
 						G_CALLBACK (on_choosebutton_activate),
@@ -224,7 +231,7 @@ on_open_export_dialog_activate (GtkButton *button, gpointer user_data)
 		if (ret == 1) // Save action selected
 		{
 			GSQL_DEBUG ("Start exporting...");
-			rbutton = (GtkRadioButton *) glade_xml_get_widget (gxml, "radiobutton1");
+			rbutton = (GtkRadioButton *) gtk_builder_get_object (builder, "radiobutton1");
 			rgroup = gtk_radio_button_get_group (rbutton);
 		
 			if (filename)
@@ -298,6 +305,6 @@ on_open_export_dialog_activate (GtkButton *button, gpointer user_data)
 		g_free (encoding);
 	
 	gtk_widget_destroy ((GtkWidget *) dialog);
-	g_object_unref(G_OBJECT(gxml));
+	g_object_unref(G_OBJECT(builder));
 	
 }

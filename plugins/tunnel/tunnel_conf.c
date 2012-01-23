@@ -26,7 +26,7 @@
 #include <tunnel_conf.h>
 #include <plugin_tunnel.h>
 
-#define GSQLP_TUNNEL_GLADE_DIALOG PACKAGE_GLADE_DIR"/plugins/tunnel_config.xml"
+#define GSQLP_TUNNEL_UI_DIALOG PACKAGE_UI_DIR"/plugins/tunnel_config.ui"
 
 /* list of ssh sessions */
 static GHashTable *tunnels = NULL;
@@ -260,7 +260,7 @@ plugin_tunnel_conf_dialog ()
 
 	bld = gtk_builder_new();
 
-	gtk_builder_add_from_file (bld, GSQLP_TUNNEL_GLADE_DIALOG, &err);
+	gtk_builder_add_from_file (bld, GSQLP_TUNNEL_UI_DIALOG, &err);
 
 	dialog = GTK_DIALOG (gtk_builder_get_object (bld, "tunnel_config_dialog"));
 

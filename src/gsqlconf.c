@@ -57,7 +57,8 @@ gsql_conf_dialog()
 	GSQL_TRACE_FUNC;
 
 	GtkDialog * dialog;
-	GladeXML* gxml;
+	GtkBuilder* builder;
+	GError *error = NULL;
 	gboolean gconf_bool_value = TRUE;
 	gint     gconf_int_value;
 	gchar    *gconf_gchar_value;
@@ -93,36 +94,41 @@ gsql_conf_dialog()
 	const gchar* const *styles;
 	const gchar* const *style;
 	
-	gxml = glade_xml_new (GSQL_GLADE_DIALOGS, "gsql_prefs_dialog", NULL);
+	builder = gtk_builder_new ();
 
-	g_return_if_fail(gxml);
+	if (!gtk_builder_add_from_file (builder, GSQL_DIALOGS_UI, &error))
+	{
+		g_warning ("Couldn't load ui file: %s", error->message);
+		g_error_free (error);
+	}
+
+	g_return_if_fail(builder);
 	
-	glade_xml_signal_autoconnect(gxml);
-	dialog = (GtkDialog *) glade_xml_get_widget (gxml, "gsql_prefs_dialog");
+	dialog = (GtkDialog *) gtk_builder_get_object (builder, "gsql_prefs_dialog");
 	
 	gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (gsql_window));
 	
-	conf_notebook = glade_xml_get_widget (gxml, "gsql_conf_notebool");
-	show_navarea_check = glade_xml_get_widget (gxml, "show_navarea_check");
-	show_messarea_check = glade_xml_get_widget (gxml, "show_messarea_check");
-    restore_sizepos_check = glade_xml_get_widget (gxml, "restore_sizepos_check");
-	widescreen_layout_check = glade_xml_get_widget (gxml, "widescreen_layout_check");
-	datetime_format_entry = glade_xml_get_widget (gxml, "datetime_format_entry");
-	datetime_preview_button = glade_xml_get_widget (gxml, "datetime_preview_button");
-	datetime_preview_entry = glade_xml_get_widget (gxml, "datetime_preview_entry");
+	conf_notebook = GTK_WIDGET (gtk_builder_get_object (builder, "gsql_conf_notebool"));
+	show_navarea_check = GTK_WIDGET (gtk_builder_get_object (builder, "show_navarea_check"));
+	show_messarea_check = GTK_WIDGET (gtk_builder_get_object (builder, "show_messarea_check"));
+    restore_sizepos_check = GTK_WIDGET (gtk_builder_get_object (builder, "restore_sizepos_check"));
+	widescreen_layout_check = GTK_WIDGET (gtk_builder_get_object (builder, "widescreen_layout_check"));
+	datetime_format_entry = GTK_WIDGET (gtk_builder_get_object (builder, "datetime_format_entry"));
+	datetime_preview_button = GTK_WIDGET (gtk_builder_get_object (builder, "datetime_preview_button"));
+	datetime_preview_entry = GTK_WIDGET (gtk_builder_get_object (builder, "datetime_preview_entry"));
 		
-	font_button = glade_xml_get_widget (gxml, "font_button");
-	use_system_font_check = glade_xml_get_widget (gxml, "use_system_font_check");
-	combo_scheme = glade_xml_get_widget (gxml, "combo_scheme");
+	font_button = GTK_WIDGET (gtk_builder_get_object (builder, "font_button"));
+	use_system_font_check = GTK_WIDGET (gtk_builder_get_object (builder, "use_system_font_check"));
+	combo_scheme = GTK_WIDGET (gtk_builder_get_object (builder, "combo_scheme"));
 	
-	insert_space_check = glade_xml_get_widget (gxml, "insert_space_check");
-	tab_width_spin = glade_xml_get_widget (gxml, "tab_width_spin");
-	display_line_num_check = glade_xml_get_widget (gxml, "display_line_num_check");
-	highlight_line_check = glade_xml_get_widget (gxml, "highlight_line_check");
-	enable_text_wrap_check = glade_xml_get_widget (gxml, "enable_text_wrap_check");
-	enable_auto_indent_check = glade_xml_get_widget (gxml, "enable_auto_indent_check");
-	plugins_tree_view = glade_xml_get_widget (gxml, "prefs_plugins_tree_view");
-	configure_button = glade_xml_get_widget (gxml, "pref_plugins_configure_button");
+	insert_space_check = GTK_WIDGET (gtk_builder_get_object (builder, "insert_space_check"));
+	tab_width_spin = GTK_WIDGET (gtk_builder_get_object (builder, "tab_width_spin"));
+	display_line_num_check = GTK_WIDGET (gtk_builder_get_object (builder, "display_line_num_check"));
+	highlight_line_check = GTK_WIDGET (gtk_builder_get_object (builder, "highlight_line_check"));
+	enable_text_wrap_check = GTK_WIDGET (gtk_builder_get_object (builder, "enable_text_wrap_check"));
+	enable_auto_indent_check = GTK_WIDGET (gtk_builder_get_object (builder, "enable_auto_indent_check"));
+	plugins_tree_view = GTK_WIDGET (gtk_builder_get_object (builder, "prefs_plugins_tree_view"));
+	configure_button = GTK_WIDGET (gtk_builder_get_object (builder, "pref_plugins_configure_button"));
 	
 	g_signal_connect (G_OBJECT(configure_button), "clicked",
 					  G_CALLBACK(on_pref_plugins_configure_button_clicked),
@@ -198,7 +204,7 @@ gsql_conf_dialog()
 	if (!gconf_int_value)
 		gconf_int_value = GSQL_EDITOR_FETCH_STEP_DEFAULT;
 	
-	fetch_limit_step = glade_xml_get_widget (gxml, "fetch_limit_step");
+	fetch_limit_step = GTK_WIDGET (gtk_builder_get_object (builder, "fetch_limit_step"));
 	g_signal_connect (G_OBJECT (fetch_limit_step), "value-changed",
 					  G_CALLBACK (on_fetch_limit_step_changed), fetch_limit_step);
 
@@ -209,7 +215,7 @@ gsql_conf_dialog()
 	if (!gconf_int_value)
 		gconf_int_value = GSQL_EDITOR_FETCH_MAX_DEFAULT;
 	
-	fetch_limit_max = glade_xml_get_widget (gxml, "fetch_limit_max");
+	fetch_limit_max = GTK_WIDGET (gtk_builder_get_object (builder, "fetch_limit_max"));
 	g_signal_connect (G_OBJECT (fetch_limit_max), "value-changed",
 					  G_CALLBACK (on_fetch_limit_max_changed), fetch_limit_max);
 	
@@ -307,7 +313,7 @@ gsql_conf_dialog()
 							conf_notebook);
 	
 	gtk_widget_destroy ((GtkWidget *) dialog);
-	g_object_unref(G_OBJECT(gxml));
+	g_object_unref(G_OBJECT(builder));
 
 }
 

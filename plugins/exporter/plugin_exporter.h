@@ -28,7 +28,7 @@
 #define GSQLP_EXPORTER_STOCK_ICON "gsql-plugin-exporter-icon"
 #define GSQLP_EXPORTER_STOCK_LOGO "gsql-plugin-exporter-logo"
 
-#define GSQLP_EXPORTER_GLADE_DIALOG PACKAGE_GLADE_DIR"/plugins/exporter_dialog.glade"
+#define GSQLP_EXPORTER_UI_DIALOG PACKAGE_UI_DIR"/plugins/exporter_dialog.ui"
 
 G_BEGIN_DECLS
 

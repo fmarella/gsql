@@ -52,7 +52,7 @@
 #define HOOKUP_OBJECT_NO_REF(component,widget,name) \
   g_object_set_data (G_OBJECT (component), name, widget)
   
-#define GSQL_GLADE_DIALOGS PACKAGE_GLADE_DIR"/gsql_dialogs.glade"
+#define GSQL_DIALOGS_UI PACKAGE_UI_DIR"/gsql_dialogs.ui"
 
 extern GtkWidget   *gsql_window;
 extern gpointer gsql_main_thread;
