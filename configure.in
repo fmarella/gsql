@@ -304,4 +304,10 @@ echo "Plugins:"
 echo "vte..............: $vte_enabled"
 echo "tunnel...........: $tunnel_enabled"
 echo
+echo "Databases:"
+echo "Firebird...............: $have_firebird"
+echo "MYSQL..................: $have_mysql"
+echo "ORACLE.................: $have_oracle"
+echo "PGSQL..................: $have_pgsql"
+echo
 
