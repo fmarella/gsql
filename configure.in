@@ -39,9 +39,11 @@ AC_MSG_RESULT([$with_gtk])
 case "$with_gtk" in
   2.0) GTK_API_VERSION=2
        GTK_REQUIRED=2.18.0
+       VTE_SUFFIX=
        ;;
   3.0) GTK_API_VERSION=3
        GTK_REQUIRED=2.91.4
+       VTE_SUFFIX=-2.90
        ;;
 esac
 AC_DEFINE_UNQUOTED(GTK_API_VERSION, $GTK_API_VERSION, [Define the GTK+ API version])
@@ -89,7 +91,7 @@ if test "$user_disabled_vte" = 1; then
 	vte_enabled="no"
 else
 	AC_MSG_RESULT(no)
-	PKG_CHECK_MODULES(PLUGIN_VTE, vte) 
+	PKG_CHECK_MODULES(PLUGIN_VTE, vte$VTE_SUFFIX) 
 	
 	vte_enabled="yes"
 	AC_SUBST(PLUGIN_VTE_CFLAGS)
