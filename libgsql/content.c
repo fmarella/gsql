@@ -25,6 +25,10 @@
 #include <libgsql/utils.h>
 #include <libgsql/cursor.h>
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 struct _GSQLContentPrivate
 {
 	const gchar *stock;
@@ -57,8 +61,21 @@ static GType gsql_content_child_type (GtkContainer   *container);
 static void gsql_content_add (GtkContainer *container, GtkWidget *widget);
 static void gsql_content_size_allocate (GtkWidget *widget, 
 										GtkAllocation *allocation);
+#if GTK_API_VERSION >= 3
+static void gsql_content_get_preferred_size (GtkWidget *widget,
+											 GtkOrientation  orientation,
+											 gint *minimal_width,
+											 gint *natural_width);
+static void gsql_content_get_preferred_width (GtkWidget *widget,
+											  gint *minimal_width,
+											  gint *natural_width);
+static void gsql_content_get_preferred_height (GtkWidget *widget,
+											   gint *minimal_width,
+											   gint *natural_width);
+#else
 static void gsql_content_size_request (GtkWidget *widget, 
 									   GtkRequisition *requisition);
+#endif
 static void gsql_content_update_labels (GSQLContent *content);
 
 static void on_content_status_changed (GSQLContent *content, gboolean status,
@@ -354,12 +371,16 @@ gsql_content_class_init (GSQLContentClass *klass)
 	parent_class = g_type_class_peek_parent (klass);
 	obj_class->dispose = gsql_content_dispose;
 	obj_class->finalize = gsql_content_finalize;
-	
+
 	container_class->add = gsql_content_add;
 	container_class->forall = gsql_content_forall;
 	container_class->child_type = gsql_content_child_type;
-	
+#if GTK_API_VERSION >= 3
+	widget_class->get_preferred_width = gsql_content_get_preferred_height;
+	widget_class->get_preferred_height = gsql_content_get_preferred_height;
+#else
 	widget_class->size_request = gsql_content_size_request;
+#endif
 	widget_class->size_allocate = gsql_content_size_allocate;
 	
 	content_signals [SIG_ON_CHANGED] = 
@@ -523,6 +544,47 @@ gsql_content_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 	
 }
 
+#if GTK_API_VERSION >= 3
+static void
+gsql_content_get_preferred_size (GtkWidget *widget,
+								GtkOrientation  orientation,
+								gint *minimal_width,
+								gint *natural_width)
+{
+
+	/* do things that are common for both orientations ... */
+
+	if (orientation == GTK_ORIENTATION_HORIZONTAL)
+	{
+		/* do stuff that only applies to width... */
+	} else {
+		/* do stuff that only applies to height... */
+	}
+
+}
+static void
+gsql_content_get_preferred_width (GtkWidget *widget,
+									gint *minimal_width,
+									gint *natural_width)
+{
+	gsql_content_get_preferred_size (widget,
+                                	GTK_ORIENTATION_HORIZONTAL,
+                                	minimal_width,
+                                	natural_width);
+
+}
+static void
+gsql_content_get_preferred_height (GtkWidget *widget,
+									gint *minimal_width,
+									gint *natural_width)
+{
+	gsql_content_get_preferred_size (widget,
+                                	GTK_ORIENTATION_VERTICAL,
+                                	minimal_width,
+                                	natural_width);
+
+}
+#else
 static void
 gsql_content_size_request (GtkWidget *widget, GtkRequisition *requisition)
 {
@@ -542,6 +604,7 @@ gsql_content_size_request (GtkWidget *widget, GtkRequisition *requisition)
 	wreq->height += gtk_container_get_border_width (GTK_CONTAINER (widget)) * 2;
 	
 }
+#endif
 
 static void
 gsql_content_update_labels (GSQLContent *content)

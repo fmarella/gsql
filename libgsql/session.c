@@ -19,7 +19,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
  */
 
-
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 
 #include <libgsql/common.h>
 #include <libgsql/session.h>
@@ -90,8 +92,21 @@ static void gsql_session_get_property	(GObject		*object,
 							 GValue			*value,
 							 GParamSpec		*pspec);
 static void gsql_session_set_session_name (GSQLSession *session);
+#if GTK_API_VERSION >= 3
+static void gsql_session_get_preferred_size (GtkWidget *widget,
+											 GtkOrientation  orientation,
+											 gint *minimal_width,
+											 gint *natural_width);
+static void gsql_session_get_preferred_width (GtkWidget *widget,
+											  gint *minimal_width,
+											  gint *natural_width);
+static void gsql_session_get_preferred_height (GtkWidget *widget,
+											   gint *minimal_width,
+											   gint *natural_width);
+#else
 static void gsql_session_size_request (GtkWidget *widget,
 							GtkRequisition *requisition);
+#endif
 static void gsql_session_size_allocate (GtkWidget *widget, 
 							GtkAllocation *allocation);
 static void gsql_session_add (GtkContainer *container, GtkWidget *widget);
@@ -835,7 +850,12 @@ gsql_session_class_init (GSQLSessionClass *klass)
 	obj_class->finalize = gsql_session_finalize;
 	obj_class->dispose = gsql_session_dispose;
 	
+#if GTK_API_VERSION >= 3
+	widget_class->get_preferred_width = gsql_session_get_preferred_height;
+	widget_class->get_preferred_height = gsql_session_get_preferred_height;
+#else
 	widget_class->size_request = gsql_session_size_request;
+#endif
 	widget_class->size_allocate = gsql_session_size_allocate;
 	
 	container_class->add = gsql_session_add;
@@ -1102,6 +1122,47 @@ gsql_session_set_session_name (GSQLSession *session)
 
 }
 
+#if GTK_API_VERSION >= 3
+static void
+gsql_session_get_preferred_size (GtkWidget *widget,
+								GtkOrientation  orientation,
+								gint *minimal_width,
+								gint *natural_width)
+{
+
+	/* do things that are common for both orientations ... */
+
+	if (orientation == GTK_ORIENTATION_HORIZONTAL)
+	{
+		/* do stuff that only applies to width... */
+	} else {
+		/* do stuff that only applies to height... */
+	}
+
+}
+static void
+gsql_session_get_preferred_width (GtkWidget *widget,
+									gint *minimal_width,
+									gint *natural_width)
+{
+	gsql_session_get_preferred_size (widget,
+                                	GTK_ORIENTATION_HORIZONTAL,
+                                	minimal_width,
+                                	natural_width);
+
+}
+static void
+gsql_session_get_preferred_height (GtkWidget *widget,
+									gint *minimal_width,
+									gint *natural_width)
+{
+	gsql_session_get_preferred_size (widget,
+                                	GTK_ORIENTATION_VERTICAL,
+                                	minimal_width,
+                                	natural_width);
+
+}
+#else
 static void
 gsql_session_size_request (GtkWidget *widget, GtkRequisition *requisition)
 {
@@ -1119,6 +1180,7 @@ gsql_session_size_request (GtkWidget *widget, GtkRequisition *requisition)
 	requisition->height += gtk_container_get_border_width (GTK_CONTAINER (widget)) * 2;
 
 }
+#endif
 
 static void
 gsql_session_size_allocate (GtkWidget *widget, GtkAllocation *allocation)

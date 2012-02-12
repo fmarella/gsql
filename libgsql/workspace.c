@@ -19,6 +19,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
  */
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 
 #include <libgsql/common.h>
 #include <libgsql/workspace.h>
@@ -50,8 +53,21 @@ static void gsql_workspace_class_init (GSQLWorkspaceClass *klass);
 static void gsql_workspace_init (GSQLWorkspace *obj);
 static void gsql_workspace_dispose (GObject *obj);
 static void gsql_workspace_finalize (GObject *obj);
+#if GTK_API_VERSION >= 3
+static void gsql_workspace_get_workspace_size (GtkWidget *widget,
+								 GtkOrientation  orientation,
+								 gint *minimal_width,
+								 gint *natural_width);
+static void gsql_workspace_get_preferred_width (GtkWidget *widget,
+											  gint *minimal_width,
+											  gint *natural_width);
+static void gsql_workspace_get_preferred_height (GtkWidget *widget,
+											   gint *minimal_width,
+											   gint *natural_width);
+#else
 static void gsql_workspace_size_request (GtkWidget *widget, 
 										 GtkRequisition *requisition);
+#endif
 static void gsql_workspace_size_allocate (GtkWidget *widget, 
 										  GtkAllocation *allocation);
 static void gsql_workspace_add (GtkContainer *container, GtkWidget *widget);
@@ -756,8 +772,12 @@ gsql_workspace_class_init (GSQLWorkspaceClass *klass)
 	
 	obj_class->finalize = gsql_workspace_finalize;
 	obj_class->dispose = gsql_workspace_dispose;
-	
+#if GTK_API_VERSION >= 3
+	widget_class->get_preferred_width = gsql_workspace_get_preferred_height;
+	widget_class->get_preferred_height = gsql_workspace_get_preferred_height;
+#else
 	widget_class->size_request = gsql_workspace_size_request;
+#endif
 	widget_class->size_allocate = gsql_workspace_size_allocate;
 	
 	container_class->add = gsql_workspace_add;
@@ -802,6 +822,47 @@ gsql_workspace_init (GSQLWorkspace *obj)
 	
 }
 
+#if GTK_API_VERSION >= 3
+static void
+gsql_workspace_get_preferred_size (GtkWidget *widget,
+								   GtkOrientation  orientation,
+								   gint *minimal_width,
+								   gint *natural_width)
+{
+
+	/* do things that are common for both orientations ... */
+
+	if (orientation == GTK_ORIENTATION_HORIZONTAL)
+	{
+		/* do stuff that only applies to width... */
+	} else {
+		/* do stuff that only applies to height... */
+	}
+
+}
+static void
+gsql_workspace_get_preferred_width (GtkWidget *widget,
+									gint *minimal_width,
+									gint *natural_width)
+{
+	gsql_workspace_get_preferred_size (widget,
+                                	GTK_ORIENTATION_HORIZONTAL,
+                                	minimal_width,
+                                	natural_width);
+
+}
+static void
+gsql_workspace_get_preferred_height (GtkWidget *widget,
+									gint *minimal_width,
+									gint *natural_width)
+{
+	gsql_workspace_get_preferred_size (widget,
+                                	GTK_ORIENTATION_VERTICAL,
+                                	minimal_width,
+                                	natural_width);
+
+}
+#else
 static void
 gsql_workspace_size_request (GtkWidget *widget, GtkRequisition *requisition)
 {
@@ -818,6 +879,7 @@ gsql_workspace_size_request (GtkWidget *widget, GtkRequisition *requisition)
 	requisition->width += gtk_container_get_border_width (GTK_CONTAINER (widget)) * 2;
 	requisition->height += gtk_container_get_border_width (GTK_CONTAINER (widget)) * 2;
 }
+#endif
 
 static void
 gsql_workspace_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
