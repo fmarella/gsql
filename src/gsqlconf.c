@@ -58,6 +58,11 @@ gsql_conf_dialog()
 
 	GtkDialog * dialog;
 	GtkBuilder* builder;
+	const gchar *ui_to_load[] = { "gsql_prefs_dialog",
+				      "adjustment1",
+				      "adjustment2",
+				      "adjustment3",
+				      NULL };
 	GError *error = NULL;
 	gboolean gconf_bool_value = TRUE;
 	gint     gconf_int_value;
@@ -96,7 +101,7 @@ gsql_conf_dialog()
 	
 	builder = gtk_builder_new ();
 
-	if (!gtk_builder_add_from_file (builder, GSQL_DIALOGS_UI, &error))
+	if (!gtk_builder_add_objects_from_file (builder, GSQL_DIALOGS_UI, (gchar **) ui_to_load, &error))
 	{
 		g_warning ("Couldn't load ui file: %s", error->message);
 		g_error_free (error);

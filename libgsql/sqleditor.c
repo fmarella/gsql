@@ -1829,6 +1829,7 @@ on_editor_cb_close (GSQLContent *content, gboolean force)
 	gboolean	changed = FALSE;
 	GtkWidget  *dialog = NULL;
 	GtkBuilder* builder;
+	const gchar *ui_to_load[] = { "gsql_unsaved_file_dialog", NULL };
 	GError* error = NULL;
 	
 	gint ret;
@@ -1849,7 +1850,7 @@ on_editor_cb_close (GSQLContent *content, gboolean force)
 	}
 	
 	builder = gtk_builder_new ();
-	if (!gtk_builder_add_from_file (builder, GSQL_DIALOGS_UI, &error))
+	if (!gtk_builder_add_objects_from_file (builder, GSQL_DIALOGS_UI, (gchar **) ui_to_load, &error))
 	{
 		g_warning ("Couldn't load ui file: %s", error->message);
 		g_error_free (error);
@@ -1903,6 +1904,7 @@ on_editor_cb_revert (GSQLContent *content)
 	GtkTextBuffer *tbuffer;
 	gboolean reading = TRUE;
 	GtkBuilder* builder;
+	const gchar *ui_to_load[] = { "gsql_isnotafile_clear_dialog", NULL };
 	GtkWidget  *dialog = NULL;
 	gchar *file;
 	gint ret;
@@ -1920,7 +1922,7 @@ on_editor_cb_revert (GSQLContent *content)
 	{
 		builder = gtk_builder_new ();
 
-		if (!gtk_builder_add_from_file (builder, GSQL_DIALOGS_UI, &err))
+		if (!gtk_builder_add_objects_from_file (builder, GSQL_DIALOGS_UI, (gchar **) ui_to_load, &err))
 		{
 			g_warning ("Couldn't load ui file: %s", err->message);
 			g_error_free (err);
