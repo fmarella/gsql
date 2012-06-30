@@ -125,6 +125,8 @@ dnl checking libssh headers and libs.
 	AC_SUBST(PLUGIN_TUNNEL_LIBS)
 fi
 
+AC_CHECK_LIB(gthread-2.0, g_thread_init)
+
 AM_CONDITIONAL(HAVE_PLUGIN_TUNNEL, [test x$tunnel_enabled = xyes])
 
 
