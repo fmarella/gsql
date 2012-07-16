@@ -1,4 +1,5 @@
 TAGS
+tags
 *.o
 *.lo
 *.la
@@ -30,3 +31,4 @@ po/POTFILES
 stamp-h1
 mkinstalldirs
 src/gsql
+gschemas.compiled

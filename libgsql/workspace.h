@@ -36,9 +36,9 @@ typedef struct _GSQLWorkspacePrivate	GSQLWorkspacePrivate;
 #define GSQL_IS_WORKSPACE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GSQL_WORKSPACE_TYPE))
 
 
-#define GSQL_CONF_WORKSPACE_SHOW_NAVIGATE			GSQL_CONF_ROOT_KEY "/workspace/show_navarea"
-#define GSQL_CONF_WORKSPACE_SHOW_MESSAGES			GSQL_CONF_ROOT_KEY "/workspace/show_messarea"
-#define GSQL_CONF_WORKSPACE_WIDESCREEN				GSQL_CONF_ROOT_KEY "/workspace/widescreen"
+#define GSQL_CONF_WORKSPACE_SHOW_NAVIGATE	GSQL_SCHEMA_WORKSPACE, "show-navarea"
+#define GSQL_CONF_WORKSPACE_SHOW_MESSAGES	GSQL_SCHEMA_WORKSPACE, "show-messarea"
+#define GSQL_CONF_WORKSPACE_WIDESCREEN		GSQL_SCHEMA_WORKSPACE, "widescreen"
 
 #include <libgsql/content.h>
 #include <libgsql/navigation.h>

@@ -95,9 +95,7 @@ engine_conf_widget_new ()
 		if (!gconf_char_value)
 			break;
 		
-		gtk_tree_model_get (GTK_TREE_MODEL (ls), 
-							&iter,
-							1, &ls_value, -1);
+		gtk_tree_model_get (GTK_TREE_MODEL (ls), &iter,	1, &ls_value, -1);
 		
 		
 		if (!g_ascii_strncasecmp (ls_value, gconf_char_value, 32))

@@ -26,8 +26,9 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
-#define GSQLE_CONF_MYSQL_USE_CUSTOM_CHARSET	GSQL_CONF_ENGINES_ROOT_KEY "/mysql/use_custom_charset"
-#define GSQLE_CONF_MYSQL_CUSTOM_CHARSET	GSQL_CONF_ENGINES_ROOT_KEY "/mysql/custom_charset"
+#define GSQL_SCHEMA_ENGINES_MYSQL               "org.gsql.engines.mysql"
+#define GSQLE_CONF_MYSQL_USE_CUSTOM_CHARSET	GSQL_SCHEMA_ENGINES_MYSQL, "use-custom-charset"
+#define GSQLE_CONF_MYSQL_CUSTOM_CHARSET	        GSQL_SCHEMA_ENGINES_MYSQL, "custom-charset"
 
 typedef struct _MySQLPredefinedCharset MySQLPredefinedCharset;
 

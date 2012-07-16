@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gsql" path="/org/gsql/">
+    <key type="b" name="my-setting">
+      <default>false</default>
+      <summary>My boolean setting</summary>
+      <description>This is an example of a boolean setting.</description>
+    </key>
+    <key type="s" name="datetime-format">
+      <default>"%Y-%m-%d %H:%M"</default>
+      <summary>Datetime Format</summary>
+      <description>This is an example of a boolean setting.</description>
+    </key>
+    <key type="i" name="sql-fetch-step">
+      <default>100</default>
+      <summary>Fetch step</summary>
+      <description></description>
+    </key>
+    <key type="i" name="sql-fetch-max">
+      <default>1000</default>
+      <summary>Fetch max</summary>
+      <description></description>
+    </key>
+  </schema>
+  <schema id="org.gsql.ui" path="/org/gsql/ui/">
+    <key type="(ii)" name="restore-size-and-position">
+      <default>(400, 500)</default>
+      <summary>Restore Size And Position</summary>
+      <description>This is an example of a boolean setting.</description>
+    </key>
+    <key type="i" name="size-x">
+      <default>400</default>
+      <summary>Window size X</summary>
+      <description>This is an example of a boolean setting.</description>
+    </key>
+    <key type="i" name="size-y">
+      <default>500</default>
+      <summary>Window size Y</summary>
+      <description>This is an example of a boolean setting.</description>
+    </key>
+  </schema>
+  <schema id="org.gsql.editor" path="/org/gsql/editor/">
+    <key type="b" name="use-system-font">
+      <default>true</default>
+      <summary>Use system font in SQL editor</summary>
+      <description>This is an example of a boolean setting.</description>
+    </key>
+    <key type="s" name="font-name">
+      <default>"Monospace"</default>
+      <summary>Font for SQL editor</summary>
+      <description>This is an example of a boolean setting.</description>
+    </key>
+    <key type="s" name="color-scheme">
+      <default>"Oblivion"</default>
+      <summary>Color theme for SQL editor</summary>
+      <description>This is an example of a boolean setting.</description>
+    </key>
+    <key type="b" name="highlight-line">
+      <default>false</default>
+      <summary>Highlight current line in SQL editor</summary>
+      <description>This is an example of a boolean setting.</description>
+    </key>
+    <key type="b" name="show-line-number">
+      <default>true</default>
+      <summary>Show line numbers in SQL editor</summary>
+      <description>This is an example of a boolean setting.</description>
+    </key>
+    <key type="b" name="enable-text-wrapping">
+      <default>true</default>
+      <summary>Enable long line wrapping in SQL editor</summary>
+      <description>This is an example of a boolean setting.</description>
+    </key>
+    <key type="b" name="enable-auto-indent">
+      <default>true</default>
+      <summary>Enable auto indent in SQL editor</summary>
+      <description>This is an example of a boolean setting.</description>
+    </key>
+    <key type="b" name="use-space-instead-tab">
+      <default>true</default>
+      <summary>Use spaces instead tabs in SQL editor</summary>
+      <description>This is an example of a boolean setting.</description>
+    </key>
+    <key type="i" name="tab-width">
+      <default>4</default>
+      <summary>Tab width in SQL editor</summary>
+      <description>This is an example of a boolean setting.</description>
+    </key>
+  </schema>
+  <schema id="org.gsql.workspace" path="/org/gsql/workspace/">
+    <key type="b" name="show-navarea">
+      <default>true</default>
+      <summary>Show navigation area</summary>
+      <description>This is an example of a boolean setting.</description>
+    </key>
+    <key type="b" name="show-messarea">
+      <default>false</default>
+      <summary>Show message area</summary>
+      <description>This is an example of a boolean setting.</description>
+    </key>
+    <key type="b" name="widescreen">
+      <default>true</default>
+      <summary>Use widescreen layout</summary>
+      <description>This is an example of a boolean setting.</description>
+    </key>
+  </schema>
+</schemalist>
