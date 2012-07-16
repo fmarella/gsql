@@ -26,8 +26,9 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
-#define GSQLE_CONF_PGSQL_USE_CUSTOM_CHARSET	GSQL_CONF_ENGINES_ROOT_KEY "/pgsql/use_custom_charset"
-#define GSQLE_CONF_PGSQL_CUSTOM_CHARSET	GSQL_CONF_ENGINES_ROOT_KEY "/pgsql/custom_charset"
+#define GSQL_SCHEMA_ENGINES_PGSQL               "org.gsql.engines.pgsql"
+#define GSQLE_CONF_PGSQL_USE_CUSTOM_CHARSET	GSQL_SCHEMA_ENGINES_PGSQL, "/pgsql/use-custom-charset"
+#define GSQLE_CONF_PGSQL_CUSTOM_CHARSET 	GSQL_SCHEMA_ENGINES_PGSQL, "/pgsql/custom-charset"
 
 typedef struct _PGSQLPredefinedCharset PGSQLPredefinedCharset;
 

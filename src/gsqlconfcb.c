@@ -39,14 +39,12 @@ on_gsql_prefs_show_dbnav_check_toggled (GtkToggleButton *togglebutton,
 	gboolean status;
         
 	status = gtk_toggle_button_get_active (togglebutton);
-	gsql_conf_value_set_boolean (GSQL_CONF_WORKSPACE_SHOW_NAVIGATE,
-								status);
+	gsql_conf_value_set_boolean (GSQL_CONF_WORKSPACE_SHOW_NAVIGATE, status);
 
 }
 
 void
-on_gsql_prefs_show_message_check_toggled (GtkToggleButton *togglebutton,
-										gpointer user_data)
+on_gsql_prefs_show_message_check_toggled (GtkToggleButton *togglebutton, gpointer user_data)
 {
 	GSQL_TRACE_FUNC;
 
@@ -81,8 +79,7 @@ on_gsql_prefs_widescreen_toggled (GtkToggleButton  *togglebutton,
 	gboolean status;
         
 	status = gtk_toggle_button_get_active (togglebutton);
-	gsql_conf_value_set_boolean (GSQL_CONF_WORKSPACE_WIDESCREEN,
-							status);
+	gsql_conf_value_set_boolean (GSQL_CONF_WORKSPACE_WIDESCREEN, status);
 
 }
 
@@ -125,8 +122,7 @@ on_gsql_prefs_use_system_font_check_toggled (GtkToggleButton *togglebutton,
 	
 	gtk_widget_set_sensitive (font_button, !status);
     
-	gsql_conf_value_set_boolean (GSQL_CONF_EDITOR_USE_SYSTEM_FONT,
-							status);
+	gsql_conf_value_set_boolean (GSQL_CONF_EDITOR_USE_SYSTEM_FONT, status);
     
 }
 
@@ -155,8 +151,7 @@ on_gsql_prefs_insert_space_check_toggled (GtkToggleButton *togglebutton,
 	gboolean status;
         
 	status = gtk_toggle_button_get_active (togglebutton);
-	gsql_conf_value_set_boolean (GSQL_CONF_EDITOR_USE_SPACE,
-							status);
+	gsql_conf_value_set_boolean (GSQL_CONF_EDITOR_USE_SPACE, status);
 }
 
 void
@@ -170,8 +165,7 @@ on_gsql_prefs_tab_width_spin_value_changed (GtkSpinButton *spin_button,
   
 	value = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (spin_button));
 
-	gsql_conf_value_set_int  (GSQL_CONF_EDITOR_TAB_WIDTH,
-							value);
+	gsql_conf_value_set_int  (GSQL_CONF_EDITOR_TAB_WIDTH, value);
 }
 
 void
@@ -183,8 +177,7 @@ on_gsql_prefs_display_line_num_check_toggled (GtkToggleButton *togglebutton,
 	gboolean status;
         
 	status = gtk_toggle_button_get_active (togglebutton);
-	gsql_conf_value_set_boolean (GSQL_CONF_EDITOR_SHOW_LINE_NUM,
-							status);
+	gsql_conf_value_set_boolean (GSQL_CONF_EDITOR_SHOW_LINE_NUM, status);
 
 }
 
@@ -197,8 +190,7 @@ on_gsql_prefs_highlight_line_check_toggled (GtkToggleButton *togglebutton,
 	gboolean status;
         
 	status = gtk_toggle_button_get_active (togglebutton);
-	gsql_conf_value_set_boolean (GSQL_CONF_EDITOR_HIGHLIGHT_LINE,
-							status);
+	gsql_conf_value_set_boolean (GSQL_CONF_EDITOR_HIGHLIGHT_LINE, status);
 }
 
 void
@@ -210,8 +202,7 @@ on_gsql_prefs_enable_text_wrap_check_toggled (GtkToggleButton *togglebutton,
 	gboolean status;
         
 	status = gtk_toggle_button_get_active (togglebutton);
-	gsql_conf_value_set_boolean (GSQL_CONF_EDITOR_WRAPPING,
-							status);
+	gsql_conf_value_set_boolean (GSQL_CONF_EDITOR_WRAPPING, status);
 
 }
 
@@ -224,8 +215,7 @@ on_gsql_prefs_enable_auto_indent_check_toggled (GtkToggleButton *togglebutton,
 	gboolean status;
         
 	status = gtk_toggle_button_get_active (togglebutton);
-	gsql_conf_value_set_boolean (GSQL_CONF_EDITOR_AUTO_INDENT,
-							status);
+	gsql_conf_value_set_boolean (GSQL_CONF_EDITOR_AUTO_INDENT, status);
 
 }
 
@@ -242,8 +232,7 @@ on_gsql_prefs_font_button_font_set (GtkFontButton * font_button,
 	font = gtk_font_button_get_font_name (font_button);
 	if (font != NULL)
 	{
-		gsql_conf_value_set_string (GSQL_CONF_EDITOR_FONT_NAME,
-									(gchar *) font);            
+		gsql_conf_value_set_string (GSQL_CONF_EDITOR_FONT_NAME, (gchar *) font);            
 	}
 
 }

@@ -157,9 +157,9 @@ gsql_type_datetime_to_gchar (GSQLTypeDateTime *dt, gchar *text, guint textlen)
 		// FIXME: just a fake widget. it is required for gsql_conf_nitify_add
 		// 
 		tmp = gtk_button_new ();
-		gsql_conf_nitify_add (GSQL_CONF_DATETIME_FORMAT,
-								(GSQLConfNotifyFunc) gsql_datetime_format_property_set,
-								tmp);
+		/* gsql_conf_nitify_add (GSQL_CONF_DATETIME_FORMAT, */
+		/* 						(GSQLConfNotifyFunc) gsql_datetime_format_property_set, */
+		/* 						tmp); */
 	}
 	
 	if (!text)

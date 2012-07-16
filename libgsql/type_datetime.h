@@ -27,7 +27,7 @@
 #include <glib-object.h>
 #include <libgsql/conf.h>
 
-#define GSQL_CONF_DATETIME_FORMAT		GSQL_CONF_ROOT_KEY "/datetime_format"
+#define GSQL_CONF_DATETIME_FORMAT		GSQL_SCHEMA, "datetime-format"
 #define GSQL_DATETIME_FORMAT_DEFAULT    "%D/%M/%Y %h:%m:%s"
 
 #define GSQL_TYPE_DATETIME (gsql_type_datetime_get_type ())

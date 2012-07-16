@@ -125,16 +125,16 @@ conf_engines_list_create (gpointer key,
 	
 	g_return_if_fail (engine != NULL);
 
-	gtk_list_store_append (GTK_LIST_STORE(engines_list), 
-						   &iter);
-	g_snprintf(tmp, 256 ,"%s/vte/%s", GSQL_CONF_PLUGINS_ROOT_KEY, engine->info.id);
-	conf_value = gsql_conf_value_get_string (tmp);
+	gtk_list_store_append (GTK_LIST_STORE(engines_list), &iter);
+	/* g_snprintf(tmp, 256 ,"%s/vte/%s", GSQL_CONF_PLUGINS_ROOT_KEY, engine->info.id); */
+	/* conf_value = gsql_conf_value_get_string (tmp); */
 	
 	gtk_list_store_set(GTK_LIST_STORE(engines_list), &iter,
 					   0, engine->info.id,
 					   1, create_pixbuf (engine->file_logo),
 					   2, engine->info.name,
-					   3, conf_value,
+					   /* 3, conf_value, */
+                                           3, "hello",
 					   -1);
 
 	return;
@@ -162,15 +162,12 @@ conf_renderer_edited_cb (GtkCellRendererText *renderer,
 	gtk_tree_model_get (GTK_TREE_MODEL (lstore), &iter,
 						0, &engine_id, -1);
 	
-	if (new_text != NULL)
-	{
-		g_snprintf(tmp, 256 ,"%s/vte/%s", GSQL_CONF_PLUGINS_ROOT_KEY, engine_id);
-		gsql_conf_value_set_string (tmp, new_text);
-		
-		gtk_list_store_set(GTK_LIST_STORE(lstore), &iter,
-					   3, new_text,
-					   -1);
-	}
+	/* if (new_text != NULL) */
+	/* { */
+	/* 	g_snprintf(tmp, 256 ,"%s/vte/%s", GSQL_CONF_PLUGINS_ROOT_KEY, engine_id); */
+	/* 	gsql_conf_value_set_string (tmp, new_text); */
+	/* 	gtk_list_store_set(GTK_LIST_STORE(lstore), &iter, 3, new_text, -1); */
+	/* } */
 	
 }
 

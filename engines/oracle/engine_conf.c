@@ -250,10 +250,9 @@ engine_conf_widget_create ()
 		g_strfreev (env_list);
 	}
 	
-	/*
+	
 	gconf_bool_value = gsql_conf_value_get_boolean (GSQLE_CONF_ORACLE_ENABLE_TRACE);
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (oracle_enable_trace_check), gconf_bool_value);
-	*/
 	
 	g_signal_connect ((gpointer) use_system_env_check, "toggled",
 						G_CALLBACK (on_conf_use_system_env_check_toggled),

@@ -226,8 +226,8 @@ gsql_conf_dialog()
 	
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (fetch_limit_max), gconf_int_value);
 	   
-	gconf_gchar_value = gsql_conf_value_get_string (GSQL_CONF_EDITOR_FONT_NAME);
-	gconf_bool_value = gsql_conf_value_get_boolean (GSQL_CONF_EDITOR_USE_SYSTEM_FONT);
+	gconf_gchar_value = gsql_conf_value_get_string  (GSQL_CONF_EDITOR_FONT_NAME);
+	gconf_bool_value  = gsql_conf_value_get_boolean (GSQL_CONF_EDITOR_USE_SYSTEM_FONT);
 	
 	if (gconf_gchar_value)
 		gtk_font_button_set_font_name (GTK_FONT_BUTTON (font_button), gconf_gchar_value);

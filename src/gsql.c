@@ -88,13 +88,12 @@ gsql_window_create (void)
 		gtk_window_move (GTK_WINDOW (gsql_window), x, y);
 		gtk_window_set_default_size (GTK_WINDOW (gsql_window), w, h);
 		
-		maxz_state = gsql_conf_value_get_boolean (GSQL_CONF_UI_MAXIMIZED);
+		/* maxz_state = gsql_conf_value_get_boolean (GSQL_CONF_UI_MAXIMIZED); */
 		
 		if (maxz_state)
 			gtk_window_maximize (GTK_WINDOW (gsql_window));
 		
 	} else {
-	
 		gtk_window_set_default_size (GTK_WINDOW (gsql_window), 800, 700);
 		gtk_window_set_position(GTK_WINDOW (gsql_window), GTK_WIN_POS_CENTER);
 	}
@@ -177,8 +176,8 @@ gsql_window_clean_exit()
 	if (state & GDK_WINDOW_STATE_FULLSCREEN)
 		fstate = TRUE;
 	
-	gsql_conf_value_set_boolean (GSQL_CONF_UI_MAXIMIZED, mstate);
-	gsql_conf_value_set_boolean (GSQL_CONF_UI_FULLSCREEN, fstate);
+	/* gsql_conf_value_set_boolean (GSQL_CONF_UI_MAXIMIZED, mstate); */
+	/* gsql_conf_value_set_boolean (GSQL_CONF_UI_FULLSCREEN, fstate); */
 	
 	if ((!(state & GDK_WINDOW_STATE_MAXIMIZED) || 
 		!(state & GDK_WINDOW_STATE_FULLSCREEN)) && 
