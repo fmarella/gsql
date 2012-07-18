@@ -15,4 +15,7 @@ gsql_data_DATA = \
 	templates/package.body.template\
 	templates/procedure.template
 
-EXTRA_DIST = $(gsql_data_DATA)
+install-data-hook:
+	$(gsettingsupdateschemacache) $(gsettingsschemadir)
+
+EXTRA_DIST = $(gsql_data_DATA) org.gsql.gschema.xml

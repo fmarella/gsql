@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gsql.engines.mysql" path="/org/gsql/engines/mysql/">
+    <key type="b" name="use-custom-charset">
+      <default>false</default>
+      <summary>Use custom charset</summary>
+      <description>This is an example of a boolean setting.</description>
+    </key>
+    <key type="s" name="custom-charset">
+      <default>"UTF-8"</default>
+      <summary>Custom Charset for MySQL</summary>
+      <description>This is an example of a boolean setting.</description>
+    </key>
+  </schema>
+</schemalist>

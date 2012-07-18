@@ -20,52 +20,47 @@
  */
 
 
-#include <gconf/gconf.h>
-#include <gconf/gconf-client.h>
 #include <libgsql/conf.h>
 #include <libgsql/common.h>
 
-static GConfClient *gconf_client;
-
+static GHashTable *all_settings;
 
 void
 gsql_conf_init()
 {
-	GSQL_TRACE_FUNC;
-	
-	gconf_client = gconf_client_get_default ();
-	
-	if (gconf_client == NULL)
-	{
-		g_warning (_("Cannot initialize configuration manager."));                        
-		return;
-	}
-	
-	gconf_client_add_dir (gconf_client, 
-							GSQL_CONF_ROOT_KEY,
-							GCONF_CLIENT_PRELOAD_NONE,
-							NULL);
+  GSQL_TRACE_FUNC;
 
+  all_settings = g_hash_table_new(g_str_hash, g_str_equal);
+
+  gsql_conf_add_schema (GSQL_SCHEMA);
+  gsql_conf_add_schema (GSQL_SCHEMA_UI);
 }
 
-static void
-gsql_conf_notify_handler (GConfClient *client, guint cnxn_id,
-						  GConfEntry *entry, gpointer userdata)
-{
-	GSQL_TRACE_FUNC;
-		
-	GSQLConfNotifyFunc handler;
+GSettings *
+gsql_conf_add_schema (gchar *schema) {
+  GSettings *settings;
+  settings = g_settings_new (schema);
 
-	handler = g_object_get_data (G_OBJECT(userdata), "fhandler");
-	
-	if (handler)
-		handler (userdata);
-	else
-		GSQL_DEBUG ("gsql_conf_notify_handler: handler is not set");
-	
+  if (settings == NULL) {
+    g_warning (_("Cannot initialize configuration manager."));
+  } else {
+    g_hash_table_insert(all_settings, g_strdup(schema), settings);
+  }
+
+  return settings;
 }
-	
 
+GSettings *
+gsql_conf_get_schema (gchar *schema) {
+  GSettings *settings;
+
+  settings = g_hash_table_lookup (all_settings, schema);
+  if (settings == NULL) {
+    settings = gsql_conf_add_schema (schema);
+  }
+
+  return settings;
+}
 
 void
 gsql_conf_nitify_add (gchar *path, GSQLConfNotifyFunc func, gpointer userdata)
@@ -77,11 +72,13 @@ gsql_conf_nitify_add (gchar *path, GSQLConfNotifyFunc func, gpointer userdata)
 	g_return_if_fail (G_IS_OBJECT (userdata));
 
 	HOOKUP_OBJECT_NO_REF(userdata, func, "fhandler");
-	
-	gconf_client_notify_add (gconf_client, 
-								path,
-								gsql_conf_notify_handler,
-								 userdata, NULL, NULL);
+
+	/* g_settings_bind (settings, gsql_conf_notify_handler); */
+
+	/* gconf_client_notify_add (gconf_client,  */
+	/* 							path, */
+	/* 							gsql_conf_notify_handler, */
+	/* 							 userdata, NULL, NULL); */
 }
 
 
@@ -95,23 +92,17 @@ gsql_conf_nitify_add (gchar *path, GSQLConfNotifyFunc func, gpointer userdata)
  **/
 
 gint
-gsql_conf_value_get_int (gchar *path)
+gsql_conf_value_get_int (gchar *schema, gchar *key)
 {
 	GSQL_TRACE_FUNC;
 
-	GError *error = NULL;
 	gint value;
-	
-	g_return_val_if_fail (path != NULL, 0);
+        
+	g_return_val_if_fail (key != NULL, 0);
 
-	value = gconf_client_get_int (gconf_client, 
-								path,
-								 &error);
-	if (error)
-		g_error_free (error);
-	
+	value = g_settings_get_int (gsql_conf_get_schema (schema), key);
+
 	return value;
-
 }
 
 
@@ -126,97 +117,67 @@ gsql_conf_value_get_int (gchar *path)
  **/
 
 gchar *
-gsql_conf_value_get_string (gchar *path)
+gsql_conf_value_get_string (gchar *schema, gchar *key)
 {
 	GSQL_TRACE_FUNC;
 
-	g_return_val_if_fail (path != NULL, NULL);
+	g_return_val_if_fail (key != NULL, NULL);
 
-	return gconf_client_get_string (gconf_client, 
-								 path,
-								 NULL);
+	return g_settings_get_string (gsql_conf_get_schema (schema), key);
 }
 
 gchar *
-gsql_conf_value_get_string_at_root (gchar *path)
+gsql_conf_value_get_string_at_root (gchar *schema, gchar *key)
 {
 	GSQL_TRACE_FUNC;
 
-	g_return_val_if_fail (path != NULL, NULL);
+	g_return_val_if_fail (key != NULL, NULL);
 	
-	return gconf_client_get_string (gconf_client, 
-								 path,
-								 NULL);
+	return g_settings_get_string (gsql_conf_get_schema (schema), key);
 }
 
 gboolean
-gsql_conf_value_get_boolean (gchar *path)
+gsql_conf_value_get_boolean (gchar *schema, gchar *key)
 {
 	GSQL_TRACE_FUNC;
 
-	GError *error = NULL;
 	gboolean value;
 	
-	g_return_val_if_fail (path != NULL, FALSE);
+	g_return_val_if_fail (key != NULL, FALSE);
 	
-	value = gconf_client_get_bool (gconf_client, 
-								 path,
-								 &error);
-	if (error)
-		g_error_free (error);
-	
+	value = g_settings_get_boolean (gsql_conf_get_schema (schema), key);
+
 	return value;
 }
 
 void
-gsql_conf_value_set_int (gchar *path, gint value)
+gsql_conf_value_set_int (gchar *schema, gchar *key, gint value)
 {
 	GSQL_TRACE_FUNC;
 
-	gboolean ret;
-	GError *error = NULL;
+	g_return_if_fail (key);
 	
-	g_return_if_fail (path);
-	
-	ret = gconf_client_set_int (gconf_client,
-						  path,
-						  value, &error);
-	if (error)
-		g_error_free (error);
-
+	g_settings_set_int (gsql_conf_get_schema (schema), key, value);
 }
 
 void
-gsql_conf_value_set_string (gchar *path, gchar *value)
+gsql_conf_value_set_string (gchar *schema, gchar *key, gchar *value)
 {
 	GSQL_TRACE_FUNC;
 
-	gboolean ret;
-
-	g_return_if_fail (path);
+	g_return_if_fail (key);
 	
-	ret = gconf_client_set_string (gconf_client,
-						  path,
-						  value, NULL);
+	g_settings_set_string (gsql_conf_get_schema (schema), key, value);
 }
 
 void
-gsql_conf_value_set_boolean (gchar *path, gboolean value)
+gsql_conf_value_set_boolean (gchar *schema, gchar *key, gboolean value)
 {
 	GSQL_TRACE_FUNC;
 
-	gboolean ret;
+	g_return_if_fail (key);
 
-	g_return_if_fail (path);
-
-	GError *error = NULL;
-
-	ret = gconf_client_set_bool (gconf_client,
-						  path,
-						  value, &error);
-	if (error)
-		g_error_free (error);
-	
+	g_settings_set_boolean (gsql_conf_get_schema (schema), key, value);
 }
 
 GSList *
@@ -226,15 +187,13 @@ gsql_conf_dir_list (gchar *path)
 
 	GSList *ret;
 
-	g_return_if_fail (path);
+	/* g_return_if_fail (path); */
 
-	GError *error = NULL;
+	/* GError *error = NULL; */
 
-	ret = gconf_client_all_dirs (gconf_client,
-						  path,
-						  &error);
-	if (error)
-		g_error_free (error);
+	/* ret = gconf_client_all_dirs (gconf_client, path, &error); */
+
+	/* if (error) g_error_free (error); */
 
 	return ret;
 }
@@ -244,19 +203,19 @@ gsql_conf_dir_exist (gchar *path)
 {
 	GSQL_TRACE_FUNC;
 
-	gboolean ret;
+	/* gboolean ret; */
 
-	g_return_if_fail (path);
+	/* g_return_if_fail (path); */
 
-	GError *error = NULL;
+	/* GError *error = NULL; */
 
-	ret = gconf_client_dir_exists (gconf_client,
-						  path,
-						  &error);
-	if (error)
-		g_error_free (error);
+	/* ret = gconf_client_dir_exists (gconf_client, */
+	/* 					  path, */
+	/* 					  &error); */
+	/* if (error) */
+	/* 	g_error_free (error); */
 
-	return ret;
+	return FALSE;
 
 }
 
@@ -265,29 +224,29 @@ gsql_conf_value_unset (gchar *path, gboolean recursive)
 {
 	GSQL_TRACE_FUNC;
 
-	GError *error = NULL;
-	gboolean	ret = TRUE;
+	/* GError *error = NULL; */
+	/* gboolean	ret = TRUE; */
 
-	g_debug ("removing: %s", path);
+	/* g_debug ("removing: %s", path); */
 
-	if (!recursive)
-	{
-		ret = gconf_client_unset (gconf_client,
-		    				path,
-		    				&error);
-	} else {
+	/* if (!recursive) */
+	/* { */
+	/* 	ret = gconf_client_unset (gconf_client, */
+	/* 	    				path, */
+	/* 	    				&error); */
+	/* } else { */
 
-		gconf_client_recursive_unset (gconf_client, path, 0, &error);
-	}
+	/* 	gconf_client_recursive_unset (gconf_client, path, 0, &error); */
+	/* } */
 
-	if (!ret)
-		g_debug ("Can not to unset the key '%s'", path);
+	/* if (!ret) */
+	/* 	g_debug ("Can not to unset the key '%s'", path); */
 	
-	if (error)
-	{
-		g_debug ("%s", error->message);
-		g_error_free (error);
-	}
+	/* if (error) */
+	/* { */
+	/* 	g_debug ("%s", error->message); */
+	/* 	g_error_free (error); */
+	/* } */
 
-	gconf_client_suggest_sync (gconf_client, &error);
+	/* gconf_client_suggest_sync (gconf_client, &error); */
 }

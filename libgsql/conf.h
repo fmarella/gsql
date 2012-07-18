@@ -25,9 +25,13 @@
 
 #include <glib.h>
 #include <gtk/gtk.h>
-#include <gconf/gconf.h>
 
-#define GSQL_CONF_ROOT_KEY "/apps/gsql"
+#define GSQL_SCHEMA              "org.gsql"
+#define GSQL_SCHEMA_UI           "org.gsql.ui"
+#define GSQL_SCHEMA_EDITOR       "org.gsql.editor"
+#define GSQL_SCHEMA_WORKSPACE    "org.gsql.workspace"
+
+#define GSQL_CONF_ROOT_KEY       "/org/gsql"
 #define GSQL_CONF_ENGINES_ROOT_KEY GSQL_CONF_ROOT_KEY "/engines"
 #define GSQL_CONF_PLUGINS_ROOT_KEY GSQL_CONF_ROOT_KEY "/plugins"
 
@@ -38,27 +42,33 @@ G_BEGIN_DECLS
 void
 gsql_conf_init();
 
+GSettings *
+gsql_conf_add_schema (gchar *schema);
+
+GSettings *
+gsql_conf_get_schema (gchar *schema);
+
 gint
-gsql_conf_value_get_int (gchar *path);
+gsql_conf_value_get_int (gchar *schema, gchar *path);
 
 gchar *
-gsql_conf_value_get_string (gchar *path);
+gsql_conf_value_get_string (gchar *schema, gchar *path);
 
 gchar *
-gsql_conf_value_get_string_at_root (gchar *path);
+gsql_conf_value_get_string_at_root (gchar *schema, gchar *path);
 
 gboolean
-gsql_conf_value_get_boolean (gchar *path);
+gsql_conf_value_get_boolean (gchar *schema, gchar *path);
 
 
 void
-gsql_conf_value_set_int (gchar *path, gint value);
+gsql_conf_value_set_int (gchar *schema, gchar *path, gint value);
 
 void
-gsql_conf_value_set_string (gchar *path, gchar *value);
+gsql_conf_value_set_string (gchar *schema, gchar *path, gchar *value);
 
 void
-gsql_conf_value_set_boolean (gchar *path, gboolean value);
+gsql_conf_value_set_boolean (gchar *schema, gchar *path, gboolean value);
 
 GSList *
 gsql_conf_dir_list (gchar *path);

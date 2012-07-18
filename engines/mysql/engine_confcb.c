@@ -38,8 +38,7 @@ on_use_custom_charset_check_toggled (GtkToggleButton *togglebutton,
     
 	gtk_widget_set_sensitive ( charset_list, status);        
         
-	gsql_conf_value_set_boolean (GSQLE_CONF_MYSQL_USE_CUSTOM_CHARSET,
-							status);    
+	gsql_conf_value_set_boolean (GSQLE_CONF_MYSQL_USE_CUSTOM_CHARSET, status);    
     
 	return;
 };

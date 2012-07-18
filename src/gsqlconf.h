@@ -26,13 +26,13 @@
 #include <libgsql/common.h>
 #include <libgsql/conf.h>
 
-#define GSQL_CONF_UI_RESTORE_SIZE_POS		GSQL_CONF_ROOT_KEY "/ui/restore_size_and_position"
-#define GSQL_CONF_UI_SIZE_X					GSQL_CONF_ROOT_KEY "/ui/size_x"
-#define GSQL_CONF_UI_SIZE_Y					GSQL_CONF_ROOT_KEY "/ui/size_y"
-#define GSQL_CONF_UI_POS_X					GSQL_CONF_ROOT_KEY "/ui/pos_x"
-#define GSQL_CONF_UI_POS_Y					GSQL_CONF_ROOT_KEY "/ui/pos_y"
-#define GSQL_CONF_UI_MAXIMIZED				GSQL_CONF_ROOT_KEY "/ui/window_maximized"
-#define GSQL_CONF_UI_FULLSCREEN				GSQL_CONF_ROOT_KEY "/ui/window_fullscreen"
+#define GSQL_CONF_UI_RESTORE_SIZE_POS		GSQL_SCHEMA_UI, "restore-size-and-position"
+#define GSQL_CONF_UI_SIZE_X			GSQL_SCHEMA_UI, "size-x"
+#define GSQL_CONF_UI_SIZE_Y			GSQL_SCHEMA_UI, "size-y"
+#define GSQL_CONF_UI_POS_X			GSQL_SCHEMA_UI, "pos-x"
+#define GSQL_CONF_UI_POS_Y			GSQL_SCHEMA_UI, "pos-y"
+#define GSQL_CONF_UI_MAXIMIZED			GSQL_SCHEMA_UI, "window-maximized"
+#define GSQL_CONF_UI_FULLSCREEN			GSQL_SCHEMA_UI, "window-fullscreen"
 
 G_BEGIN_DECLS
 

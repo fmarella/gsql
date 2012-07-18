@@ -389,13 +389,13 @@ gsql_editor_new (GSQLSession *session, GtkWidget *source)
 	
 	editor->private->fetch_max = limit_max;
 	
-	gsql_conf_nitify_add (GSQL_CONF_SQL_FETCH_STEP,
-								on_sqleditor_fetch_limit_set,
-								(gpointer) editor);
+	/* gsql_conf_nitify_add (GSQL_CONF_SQL_FETCH_STEP, */
+	/* 							on_sqleditor_fetch_limit_set, */
+	/* 							(gpointer) editor); */
 	
-	gsql_conf_nitify_add (GSQL_CONF_SQL_FETCH_MAX,
-								on_sqleditor_fetch_limit_set,
-								(gpointer) editor);
+	/* gsql_conf_nitify_add (GSQL_CONF_SQL_FETCH_MAX, */
+	/* 							on_sqleditor_fetch_limit_set, */
+	/* 							(gpointer) editor); */
 	
 	result_scroll = gtk_scrolled_window_new (NULL, NULL);        
 	gtk_box_pack_start (GTK_BOX (sql_result_vbox), 

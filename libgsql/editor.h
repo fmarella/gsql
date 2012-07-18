@@ -31,26 +31,24 @@
 #include <gtksourceview/gtksourcestyleschememanager.h>
 #include <libgsql/conf.h>
 
-#define GSQL_CONF_EDITOR_USE_SYSTEM_FONT	GSQL_CONF_ROOT_KEY "/editor/use_system_font"
-#define GSQL_CONF_EDITOR_FONT_NAME			GSQL_CONF_ROOT_KEY "/editor/font_name"
-#define GSQL_CONF_EDITOR_COLOR_SCHEME		GSQL_CONF_ROOT_KEY "/editor/color_scheme"
-#define GSQL_CONF_EDITOR_USE_SPACE			GSQL_CONF_ROOT_KEY "/editor/use_space_instead_tab"
-#define GSQL_CONF_EDITOR_TAB_WIDTH			GSQL_CONF_ROOT_KEY "/editor/tab_width"
-#define GSQL_CONF_EDITOR_SHOW_LINE_NUM		GSQL_CONF_ROOT_KEY "/editor/show_line_number"
-#define GSQL_CONF_EDITOR_HIGHLIGHT_LINE		GSQL_CONF_ROOT_KEY "/editor/highlight_line"
-#define GSQL_CONF_EDITOR_WRAPPING			GSQL_CONF_ROOT_KEY "/editor/enable_text_wrapping"
-#define GSQL_CONF_EDITOR_AUTO_INDENT		GSQL_CONF_ROOT_KEY "/editor/enable_auto_indent"
+#define GSQL_CONF_EDITOR_USE_SYSTEM_FONT	GSQL_SCHEMA_EDITOR, "use-system-font"
+#define GSQL_CONF_EDITOR_FONT_NAME		GSQL_SCHEMA_EDITOR, "font-name"
+#define GSQL_CONF_EDITOR_COLOR_SCHEME		GSQL_SCHEMA_EDITOR, "color-scheme"
+#define GSQL_CONF_EDITOR_USE_SPACE		GSQL_SCHEMA_EDITOR, "use-space-instead-tab"
+#define GSQL_CONF_EDITOR_TAB_WIDTH		GSQL_SCHEMA_EDITOR, "tab-width"
+#define GSQL_CONF_EDITOR_SHOW_LINE_NUM		GSQL_SCHEMA_EDITOR, "show-line-number"
+#define GSQL_CONF_EDITOR_HIGHLIGHT_LINE		GSQL_SCHEMA_EDITOR, "highlight-line"
+#define GSQL_CONF_EDITOR_WRAPPING		GSQL_SCHEMA_EDITOR, "enable-text-wrapping"
+#define GSQL_CONF_EDITOR_AUTO_INDENT		GSQL_SCHEMA_EDITOR, "enable-auto-indent"
 
 #define GSQL_CONF_EDITOR_TAB_WIDTH_DEFAULT  4
-
-#define GNOME_SYSTEM_FONT       "/desktop/gnome/interface/monospace_font_name"
-
 
 // default fetch rows limit 
 #define SQL_EDITOR_CUSTOM_FETCH_LIMIT	100
 
 #define GSQL_EDITOR_MARKER_COMPLETE "complete"
-#define GSQL_EDITOR_MARKER_FAILED "error"
+#define GSQL_EDITOR_MARKER_FAILED   "error"
+
 GtkWidget *
 gsql_source_editor_new(gchar * buffer_body);
 

@@ -141,10 +141,10 @@ on_open_terminal_activate (GtkMenuItem * mi, gpointer data)
 	if (session == NULL)
 		return;
 	
-	g_snprintf(tmp, 256 ,"%s/vte/%s", GSQL_CONF_PLUGINS_ROOT_KEY, 
-			   session->engine->info.id);
-	command = gsql_conf_value_get_string (tmp);
-	cmd = vte_parse_command (session, command);
+	/* g_snprintf(tmp, 256 ,"%s/vte/%s", GSQL_CONF_PLUGINS_ROOT_KEY,  */
+	/* 		   session->engine->info.id); */
+	/* command = gsql_conf_value_get_string (tmp); */
+	/* cmd = vte_parse_command (session, command); */
 	
 	if (cmd == NULL)
 		return;

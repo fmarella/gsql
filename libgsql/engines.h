@@ -31,7 +31,7 @@
 #define GSQL_ENGINE_SYMBOL_LOAD   			"engine_load"
 #define GSQL_ENGINE_SYMBOL_UNLOAD 			"engine_unload"
 
-#define GNOME_SYSTEM_FONT       "/desktop/gnome/interface/monospace_font_name"
+#define GNOME_SYSTEM_FONT    "org.gnome.desktop.interface", "monospace-font-name"
 
 typedef struct _GSQLEngineInfo GSQLEngineInfo;
 typedef struct _GSQLEngine GSQLEngine;

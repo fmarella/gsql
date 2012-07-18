@@ -150,83 +150,83 @@ plugin_tunnel_conf_load ()
 		// remote host settings
 		
 		g_snprintf (path, 512, "%s/%s", (gchar *) lst->data, "name");	
-		if (str = gsql_conf_value_get_string (path))
-			g_snprintf (link->name, 128, "%s", str);
+		/* if (str = gsql_conf_value_get_string (path)) */
+		/* 	g_snprintf (link->name, 128, "%s", str); */
 
 		g_snprintf (path, 512, "%s/%s", (gchar *) lst->data, "hostname");	
-		if (str = gsql_conf_value_get_string (path))
-			g_snprintf (link->hostname, 128, "%s", str);
+		/* if (str = gsql_conf_value_get_string (path)) */
+		/* 	g_snprintf (link->hostname, 128, "%s", str); */
 
 		g_snprintf (path, 512, "%s/%s", (gchar *) lst->data, "username");	
-		if (str = gsql_conf_value_get_string (path))
-			g_snprintf (link->username, 128, "%s", str);
+		/* if (str = gsql_conf_value_get_string (path)) */
+		/* 	g_snprintf (link->username, 128, "%s", str); */
 
 		g_snprintf (path, 512, "%s/%s", (gchar *) lst->data, "password");	
-		if (str = gsql_conf_value_get_string (path))
-			g_snprintf (link->password, 128, "%s", str);
+		/* if (str = gsql_conf_value_get_string (path)) */
+		/* 	g_snprintf (link->password, 128, "%s", str); */
 
 		g_snprintf (path, 512, "%s/%s", (gchar *) lst->data, "auth_type");
-		if (d = gsql_conf_value_get_int (path))
-		{
-			link->auth_type = d;
+		/* if (d = gsql_conf_value_get_int (path)) */
+		/* { */
+		/* 	link->auth_type = d; */
 			
-		} else {
+		/* } else { */
 			
-			link->auth_type = GSQLP_TUNNEL_AUTH_PASS;
-		}
+		/* 	link->auth_type = GSQLP_TUNNEL_AUTH_PASS; */
+		/* } */
 
 		g_snprintf (path, 512, "%s/%s", (gchar *) lst->data, "port");	
-		if (d = gsql_conf_value_get_int (path))
-		{
-			link->port = d;
+		/* if (d = gsql_conf_value_get_int (path)) */
+		/* { */
+		/* 	link->port = d; */
 			
-		} else {
+		/* } else { */
 
-			link->port = 22;
-		}
+		/* 	link->port = 22; */
+		/* } */
 
 		// localhost settings
 
 		g_snprintf (path, 512, "%s/%s", (gchar *) lst->data, "localname");	
-		if (str = gsql_conf_value_get_string (path))
-		{
-			g_snprintf (link->localname, 128, "%s", str);
-		} else {
-			g_snprintf (link->localname, 128, "localhost");
-			gsql_conf_value_set_string (path, link->localname);
-		}
+		/* if (str = gsql_conf_value_get_string (path)) */
+		/* { */
+		/* 	g_snprintf (link->localname, 128, "%s", str); */
+		/* } else { */
+		/* 	g_snprintf (link->localname, 128, "localhost"); */
+		/* 	gsql_conf_value_set_string (path, link->localname); */
+		/* } */
 		
 		g_snprintf (path, 512, "%s/%s", (gchar *) lst->data, "localport");	
-		if (d = gsql_conf_value_get_int (path))
-		{
-			link->localport = d;
-		} else {
+		/* if (d = gsql_conf_value_get_int (path)) */
+		/* { */
+		/* 	link->localport = d; */
+		/* } else { */
 
-			link->localport = 1025;
-			gsql_conf_value_set_int (path, link->localport);
-		}
+		/* 	link->localport = 1025; */
+		/* 	gsql_conf_value_set_int (path, link->localport); */
+		/* } */
 		
 		// forwarded host settings
 
 		g_snprintf (path, 512, "%s/%s", (gchar *) lst->data, "fwdhost");
-		if (str = gsql_conf_value_get_string (path))
-			g_snprintf (link->fwdhost, 128, "%s", str);
+		/* if (str = gsql_conf_value_get_string (path)) */
+		/* 	g_snprintf (link->fwdhost, 128, "%s", str); */
 
 		g_snprintf (path, 512, "%s/%s", (gchar *) lst->data, "fwdport");
 
-		if (d = gsql_conf_value_get_int (path))
-		{
-			link->fwdport = d;
+		/* if (d = gsql_conf_value_get_int (path)) */
+		/* { */
+		/* 	link->fwdport = d; */
 
-		} else {
+		/* } else { */
 
-			link->fwdport = 22;
-			gsql_conf_value_set_int (path, link->fwdport);
-		}
+		/* 	link->fwdport = 22; */
+		/* 	gsql_conf_value_set_int (path, link->fwdport); */
+		/* } */
 		// ----
 		g_snprintf (path, 512, "%s/%s", (gchar *) lst->data, "autoconnect");
-		b = gsql_conf_value_get_boolean (path);
-		link->autoconnect = b;
+		/* b = gsql_conf_value_get_boolean (path); */
+		/* link->autoconnect = b; */
 
 		if (b) // autoconnect threaded
 			gsqlp_tunnel_do_connect (link);
@@ -408,8 +408,8 @@ on_conf_button_new_activate (GtkButton *button,
 
 	g_return_if_fail (i<128);
 
-	g_snprintf (tmp, 256, "%s/tunnel/sessions/link%d/name", GSQL_CONF_PLUGINS_ROOT_KEY, i);
-	gsql_conf_value_set_string (tmp, N_("enter name here"));
+	/* g_snprintf (tmp, 256, "%s/tunnel/sessions/link%d/name", GSQL_CONF_PLUGINS_ROOT_KEY, i); */
+	/* gsql_conf_value_set_string (tmp, N_("enter name here")); */
 
 	model = gtk_tree_view_get_model (tv);
 	gtk_list_store_append (GTK_LIST_STORE (model), &iter);
@@ -514,7 +514,7 @@ on_connection_name_edited (GtkCellRendererText *renderer,
 	g_snprintf (str, 128, "%s/tunnel/sessions/%s/name", 
 	    					GSQL_CONF_PLUGINS_ROOT_KEY, tunnel->confname);
 
-	gsql_conf_value_set_string (str, new_text);
+	/* gsql_conf_value_set_string (str, new_text); */
 	g_snprintf (tunnel->name, 128, "%s", new_text); 
 	
 }
@@ -609,7 +609,7 @@ on_connect_toggled (GtkCellRendererToggle *cell,
 				gsqlp_tunnel_do_disconnect (tunnel);
 	}
 	
-	gsql_conf_value_set_boolean (str, !bvalue);
+	/* gsql_conf_value_set_boolean (str, !bvalue); */
 	
 	gtk_list_store_set(GTK_LIST_STORE (model), &iter,
 						0, !bvalue,
@@ -947,7 +947,7 @@ on_entry_cshostname_changed (GtkEditable *editable,
 	g_snprintf (str, 256, "%s/tunnel/sessions/%s/hostname", 
 	    					GSQL_CONF_PLUGINS_ROOT_KEY, tunnel->confname);
 
-	gsql_conf_value_set_string (str, tunnel->hostname);
+	/* gsql_conf_value_set_string (str, tunnel->hostname); */
 	
 }
 
@@ -1043,7 +1043,7 @@ on_entry_csport_changed (GtkSpinButton *spinbutton,
 	g_snprintf (str, 256, "%s/tunnel/sessions/%s/port", 
 	    					GSQL_CONF_PLUGINS_ROOT_KEY, tunnel->confname);
 
-	gsql_conf_value_set_int (str, tunnel->port);
+	/* gsql_conf_value_set_int (str, tunnel->port); */
 
 }
 
@@ -1087,7 +1087,7 @@ on_entry_csusername_changed (GtkEditable *editable,
 	g_snprintf (str, 256, "%s/tunnel/sessions/%s/username", 
 	    					GSQL_CONF_PLUGINS_ROOT_KEY, tunnel->confname);
 
-	gsql_conf_value_set_string (str, tunnel->username);
+	/* gsql_conf_value_set_string (str, tunnel->username); */
 
 }
 
@@ -1131,7 +1131,7 @@ on_entry_cspassword_changed (GtkEditable *editable,
 	g_snprintf (str, 256, "%s/tunnel/sessions/%s/password", 
 	    					GSQL_CONF_PLUGINS_ROOT_KEY, tunnel->confname);
 
-	gsql_conf_value_set_string (str, tunnel->password);
+	/* gsql_conf_value_set_string (str, tunnel->password); */
 
 }
 
@@ -1175,7 +1175,7 @@ on_entry_fslocaladr_changed (GtkEditable *editable,
 	g_snprintf (str, 256, "%s/tunnel/sessions/%s/localname", 
 	    					GSQL_CONF_PLUGINS_ROOT_KEY, tunnel->confname);
 
-	gsql_conf_value_set_string (str, tunnel->localname);
+	/* gsql_conf_value_set_string (str, tunnel->localname); */
 
 }
 
@@ -1219,7 +1219,7 @@ on_entry_fslocalport_changed (GtkSpinButton *spinbutton,
 	g_snprintf (str, 256, "%s/tunnel/sessions/%s/localport", 
 	    					GSQL_CONF_PLUGINS_ROOT_KEY, tunnel->confname);
 
-	gsql_conf_value_set_int (str, tunnel->localport);
+	/* gsql_conf_value_set_int (str, tunnel->localport); */
 
 }
 
@@ -1263,7 +1263,7 @@ on_entry_fsremoteadr_changed (GtkEditable *editable,
 	g_snprintf (str, 256, "%s/tunnel/sessions/%s/fwdhost", 
 	    					GSQL_CONF_PLUGINS_ROOT_KEY, tunnel->confname);
 
-	gsql_conf_value_set_string (str, tunnel->fwdhost);
+	/* gsql_conf_value_set_string (str, tunnel->fwdhost); */
 
 }
 
@@ -1307,7 +1307,7 @@ on_entry_fsremoteport_changed (GtkSpinButton *spinbutton,
 	g_snprintf (str, 256, "%s/tunnel/sessions/%s/fwdport", 
 	    					GSQL_CONF_PLUGINS_ROOT_KEY, tunnel->confname);
 
-	gsql_conf_value_set_int (str, tunnel->fwdport);
+	/* gsql_conf_value_set_int (str, tunnel->fwdport); */
 
 }
 
@@ -1348,7 +1348,7 @@ static void on_rb_authpass_changed (GtkToggleButton * button,
 		g_snprintf (str, 256, "%s/tunnel/sessions/%s/auth_type", 
 	    					GSQL_CONF_PLUGINS_ROOT_KEY, tunnel->confname);
 		
-		gsql_conf_value_set_int (str, tunnel->auth_type);
+		/* gsql_conf_value_set_int (str, tunnel->auth_type); */
 	}
 	
 
@@ -1392,7 +1392,7 @@ static void on_rb_authpub_changed (GtkToggleButton *button,
 		g_snprintf (str, 256, "%s/tunnel/sessions/%s/auth_type", 
 	    					GSQL_CONF_PLUGINS_ROOT_KEY, tunnel->confname);
 		
-		gsql_conf_value_set_int (str, tunnel->auth_type);
+		/* gsql_conf_value_set_int (str, tunnel->auth_type); */
 	}
 
 
